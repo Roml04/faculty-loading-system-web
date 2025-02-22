@@ -12,11 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tertiary_section_class', function (Blueprint $table) {
+        Schema::create('tertiary_section_classes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
-            $table->foreignId('course_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->foreignId('teachers_id')->constrained()->onDelete('cascade');
+            $table->foreignId('courses_id')->constrained()->onDelete('cascade');
+            $table->foreignId('rooms_id')->constrained()->onDelete('cascade');
             $table->text('day_of_week')->
                 check("day_of_week IN (
                     'monday', 
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE tertiary_section_class ADD COLUMN time_range TSRANGE NOT NULL");
+        DB::statement("ALTER TABLE tertiary_section_classes ADD COLUMN time_range TSRANGE NOT NULL");
     }
 
     /**
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tertiary_section_class');
+        Schema::dropIfExists('tertiary_section_classes');
     }
 };

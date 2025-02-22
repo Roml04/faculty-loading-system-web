@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tertiary_section', function (Blueprint $table) {
+        Schema::create('tertiary_sections', function (Blueprint $table) {
             $table->id();
             $table->string('section_name');
             $table->text('year')->check("year IN ('first_year', 'second_year', 'third_year', 'fourth_year')");
             $table->text('term')->check("term IN ('first_term', 'second_term')");
-            $table->foreignId('program_id')->constrained()->onDelete('cascade');
+            $table->foreignId('programs_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tertiary_section');
+        Schema::dropIfExists('tertiary_sections');
     }
 };
