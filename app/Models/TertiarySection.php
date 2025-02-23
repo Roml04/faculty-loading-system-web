@@ -14,6 +14,6 @@ class TertiarySection extends Model
     }
 
     public function tertiarysectionclass() {
-        return $this->belongsToMany(TertiarySectionClass::class);
+        return $this->belongsToMany(TertiarySectionClass::class, 'tertiarysections_id');
     }
 }
