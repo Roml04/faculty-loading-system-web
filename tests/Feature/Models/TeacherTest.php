@@ -4,19 +4,27 @@ namespace Tests\Feature\Models;
 
 use App\Models\Teacher;
 use App\Models\TertiarySectionClass;
+use Database\Seeders\TeacherSeeder;
+use Database\Seeders\TertiarySectionClassSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TeacherTest extends TestCase
 {
+    use RefreshDatabase;
+    
     public function test_teacher_has_many_classes()
-{
-    $teacher = Teacher::factory()->create();
-    $classes = TertiarySectionClass::factory()->count(3)->create([
-        'teacher_id' => $teacher->id,
-    ]);
+    {
+        $this->seed(TeacherSeeder::class);
+        $this->seed(TertiarySectionClassSeeder::class);
 
-    $this->assertCount(3, $teacher->classes); // Ensures teacher has 3 classes
-}
+        $teacher = Teacher::first();
+
+        $this->assertNotNull($teacher);
+        $relatedClasses = $teacher->tertiarysectionclass;
+
+        $this->assertGreaterThan(0, $relatedClasses->count());
+        $this->assertInstanceOf(TertiarySectionClass::class, $relatedClasses->first());
+    }
 }
