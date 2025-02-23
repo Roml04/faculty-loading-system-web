@@ -14,14 +14,6 @@ class TertiarySectionSeeder extends Seeder
      */
     public function run(): void
     {
-        $programs = Program::doesntHave('tertiarysection')->inRandomOrder()->get();
-
-        $programArr = [];
-
-        foreach($programs as $program) {
-            $programArr[] = $program;
-        }
-
         $sections = [];
 
         for($i = 1; $i <= 4; $i++) {
@@ -30,12 +22,13 @@ class TertiarySectionSeeder extends Seeder
             }
         }
 
+        
         for($i = 0; $i < 20; $i++) {
             TertiarySection::create([
                 'section_name' => 'ABC' . array_shift($sections),
                 'year' => fake()->randomElement(['first_year', 'second_year', 'third_year', 'fourth_year']),
                 'term' => fake()->randomElement(['first_term', 'second_term']),
-                'programs_id' => $programArr[fake()->numberBetween(0, ($programs->count() - 1))]->id
+                'programs_id' => Program::inRandomOrder()->first()->id
             ]);
         }
     }
