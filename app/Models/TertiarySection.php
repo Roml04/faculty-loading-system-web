@@ -10,10 +10,10 @@ class TertiarySection extends Model
     use HasFactory;
 
     public function program() {
-        return $this->hasOne(Program::class);
+        return $this->belongsTo(Program::class, 'programs_id');
     }
 
     public function tertiarysectionclass() {
-        return $this->belongsToMany(TertiarySectionClass::class, 'tertiarysections_id');
+        return $this->belongsToMany(TertiarySectionClass::class, 'tertiary_sections_id');
     }
 }

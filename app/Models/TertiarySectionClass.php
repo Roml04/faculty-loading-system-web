@@ -10,15 +10,15 @@ class TertiarySectionClass extends Model
     use HasFactory;
 
     public function teacher() {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(Teacher::class, 'teachers_id');
     }
 
     public function course() {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class, 'courses_id');
     }
 
     public function room() {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(Room::class, 'rooms_id');
     }
 
     public function tertiarysection() {
