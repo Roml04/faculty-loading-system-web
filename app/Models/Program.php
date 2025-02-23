@@ -10,6 +10,6 @@ class Program extends Model
     use HasFactory;
 
     public function tertiarysection() {
-        return $this->hasMany(TertiarySection::class);
+        return $this->hasMany(TertiarySection::class, 'programs_id');
     }
 }
