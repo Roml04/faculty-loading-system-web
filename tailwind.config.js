@@ -30,8 +30,17 @@ export default {
                 state_danger_d: '#FF5444',
                 grid_lightgray: '#E1E1E1',
             },
+            fontSize: {
+                headline: ['4rem', { lineHeight: '69.6px', letterSpacing: '0%', fontWeight: 600 }],
+                subheadline: ['2rem', { lineHeight: '37.5px', letterSpacing: '0%'}],
+                heading1: ['2rem', { lineHeight: '37.5px', letterSpacing: '0%', fontWeight: 600 }],
+                heading2: ['1.5rem', { lineHeight: '28.1px', letterSpacing: '0%', fontWeight: 600 }],
+                heading3: ['1rem', { lineHeight: '18.8px', letterSpacing: '0%', fontWeight: 800 }],
+                paragraph_bs: ['1rem', { lineHeight: '18.8px', letterSpacing: '0%' }],
+                paragraph_sm: ['0.75rem', { lineHeight: '18.8px', letterSpacing: '0%' }],
+            },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Roboto', 'sans-serif'],
             },
         },
     },
