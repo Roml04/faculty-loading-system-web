@@ -1,3 +1,3 @@
-<button class="p-[1em] rounded-md bg-primary text-white">
+<button class="cstm-button p-[1em] rounded-md bg-primary text-white">
     <p>Browse Schedule</p>
 </button>
