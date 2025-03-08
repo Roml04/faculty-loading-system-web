@@ -48,7 +48,7 @@
     </head>
     <body class="flex flex-col items-center justify-center gap-8">
         <section style="background: url('{{ asset('assets/images/banner.jpg') }}')" class="banner-section flex flex-col w-full p-20 gap-20">
-            <div class="flex flex-col">
+            <div class="flex flex-col text-txtclr_primary">
                 <p class="text-subheadline">STI Faculty Loading System's</p>
                 <p class="text-headline">SCHEDULE VIEWER</p>
             </div>
