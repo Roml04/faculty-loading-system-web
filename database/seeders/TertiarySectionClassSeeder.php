@@ -26,7 +26,7 @@ class TertiarySectionClassSeeder extends Seeder
                 'teachers_id' => $teacher->id,
                 'courses_id' => $course->id,
                 'rooms_id' => $room->id,
-                'time_range' => DB::raw("'[2025-02-23 10:00, 2025-02-23 12:00]'::tsrange"),
+                // 'time_range' => DB::raw("'[2025-02-23 10:00, 2025-02-23 12:00]'::tsrange"),
                 'day_of_week' => fake()->randomElement([
                     'monday', 
                     'tuesday', 

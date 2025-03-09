@@ -30,7 +30,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE tertiary_section_classes ADD COLUMN time_range TSRANGE NOT NULL");
+        // DB::statement("ALTER TABLE tertiary_section_classes ADD COLUMN time_range TSRANGE NOT NULL");
     }
 
     /**
