@@ -12,9 +12,9 @@
             </a>
             @if ($program != null)
                 <ul class="flex flex-col gap-2">
-                    {{-- @dd($program) --}}
                     @foreach ($program['sections'] as $item)
-                        <x-molecules.section-list :sectionname="$item['name']"/>
+                        {{-- replace sectionid with the actual sectionid --}}
+                        <x-molecules.section-list :sectionname="$item['name']" :sectionid="1"/>
                     @endforeach
                 </ul>
             @else
