@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Program;
-use App\Models\TertiarySection;
+use App\Models\Section;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TertiarySectionSeeder extends Seeder
+class SectionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,7 +24,7 @@ class TertiarySectionSeeder extends Seeder
 
         
         for($i = 0; $i < 20; $i++) {
-            TertiarySection::create([
+            Section::create([
                 'section_name' => 'ABC' . array_shift($sections),
                 'year' => fake()->randomElement(['first_year', 'second_year', 'third_year', 'fourth_year']),
                 'term' => fake()->randomElement(['first_term', 'second_term']),

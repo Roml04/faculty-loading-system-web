@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+// use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            CourseSeeder::class,
             ProgramSeeder::class,
-            TeacherSeeder::class,
+            SectionSeeder::class,
+            CourseSeeder::class,
             RoomSeeder::class,
-            TertiarySectionSeeder::class,
-            TertiarySectionClassSeeder::class
+            TeacherSeeder::class,
+            ClassTimeSlotSeeder::class
         ]);
     }
 }
