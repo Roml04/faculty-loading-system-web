@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tertiary_section_classes', function (Blueprint $table) {
+        Schema::create('classtimeslots', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teachers_id')->constrained()->onDelete('cascade');
             $table->foreignId('courses_id')->constrained()->onDelete('cascade');
@@ -27,10 +26,10 @@ return new class extends Migration
                     'saturday', 
                     'sunday'"
                 );
+            // column for storing day of the week with class time start
+            // column for storing day of the week with class time end
             $table->timestamps();
         });
-
-        // DB::statement("ALTER TABLE tertiary_section_classes ADD COLUMN time_range TSRANGE NOT NULL");
     }
 
     /**
@@ -38,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tertiary_section_classes');
+        Schema::dropIfExists('classtimeslots');
     }
 };

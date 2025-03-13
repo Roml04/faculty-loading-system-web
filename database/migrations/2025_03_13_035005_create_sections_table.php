@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tertiary_sections', function (Blueprint $table) {
+        Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('section_name');
             $table->text('year')->check("year IN ('first_year', 'second_year', 'third_year', 'fourth_year')");
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tertiary_sections');
+        Schema::dropIfExists('sections');
     }
 };
