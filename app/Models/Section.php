@@ -10,7 +10,7 @@ class Section extends Model
         return $this->belongsTo(Program::class, 'programs_id');
     }
 
-    public function tertiarysectionclass() {
+    public function classtimeslot() {
         return $this->belongsToMany(ClassTimeSlot::class);
     }
 }
