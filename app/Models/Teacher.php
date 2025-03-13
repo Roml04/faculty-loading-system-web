@@ -10,6 +10,6 @@ class Teacher extends Model
     use HasFactory;
 
     public function tertiarysectionclass() {
-        return $this->hasMany(ClassTimeSlot::class, 'teachers_id');
+        return $this->hasMany(ClassTimeSlot::class);
     }
 }

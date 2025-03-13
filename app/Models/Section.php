@@ -11,6 +11,6 @@ class Section extends Model
     }
 
     public function tertiarysectionclass() {
-        return $this->belongsToMany(ClassTimeSlot::class, 'tertiary_sections_id');
+        return $this->belongsToMany(ClassTimeSlot::class);
     }
 }

@@ -10,6 +10,6 @@ class Room extends Model
     use HasFactory;
 
     public function tertiarysectionclass() {
-        return $this->hasMany(ClassTimeSlot::class, 'rooms_id');
+        return $this->hasMany(ClassTimeSlot::class);
     }
 }
