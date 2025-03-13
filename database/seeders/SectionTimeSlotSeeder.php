@@ -21,7 +21,7 @@ class SectionTimeSlotSeeder extends Seeder
 
             SectionTimeSlot::create([
                 'sections_id' => $section->id,
-                'class_times_lots_id' => $classtimeslot->id
+                'class_time_slots_id' => $classtimeslot->id
             ]);
         }
     }
