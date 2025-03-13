@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\ClassTimeSlot;
 use App\Models\Course;
 use App\Models\Room;
 use App\Models\Teacher;
 use App\Models\TertiarySection;
 use App\Models\TertiarySectionClass;
+use Database\Seeders\ClassTimeSlotSeeder;
 use Database\Seeders\CourseSeeder;
 use Database\Seeders\RoomSeeder;
 use Database\Seeders\TeacherSeeder;
@@ -28,10 +30,10 @@ class TertiarySectionClassTest extends TestCase
 
     public function test_tertiary_section_class_belongs_to_teacher()
     {
-        $this->seed(TertiarySectionClassSeeder::class);
+        $this->seed(ClassTimeSlotSeeder::class);
         $this->seed(TeacherSeeder::class);
 
-        $class = TertiarySectionClass::first();
+        $class = ClassTimeSlot::first();
         $this->assertNotNull($class);
 
         $this->assertInstanceOf(Teacher::class, $class->teacher);
@@ -39,10 +41,10 @@ class TertiarySectionClassTest extends TestCase
 
     public function test_tertiary_section_class_belongs_to_course()
     {
-        $this->seed(TertiarySectionClassSeeder::class);
+        $this->seed(ClassTimeSlotSeeder::class);
         $this->seed(CourseSeeder::class);
 
-        $class = TertiarySectionClass::first();
+        $class = ClassTimeSlot::first();
         $this->assertNotNull($class);
 
         $this->assertInstanceOf(Course::class, $class->course);
@@ -50,10 +52,10 @@ class TertiarySectionClassTest extends TestCase
 
     public function test_tertiary_section_class_belongs_to_room()
     {
-        $this->seed(TertiarySectionClassSeeder::class);
+        $this->seed(ClassTimeSlotSeeder::class);
         $this->seed(RoomSeeder::class);
 
-        $class = TertiarySectionClass::first();
+        $class = ClassTimeSlot::first();
         $this->assertNotNull($class);
 
         $this->assertInstanceOf(Room::class, $class->room);

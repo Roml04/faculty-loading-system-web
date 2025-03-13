@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\ClassTimeSlot;
 use App\Models\Room;
-use App\Models\TertiarySectionClass;
+use Database\Seeders\ClassTimeSlotSeeder;
 use Database\Seeders\RoomSeeder;
-use Database\Seeders\TertiarySectionClassSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,7 +16,7 @@ class RoomTest extends TestCase
     
     public function test_rooms_has_many_tertiary_section_class() {
         $this->seed(RoomSeeder::class);
-        $this->seed(TertiarySectionClassSeeder::class);
+        $this->seed(ClassTimeSlotSeeder::class);
 
         $room = Room::first();
 
@@ -24,6 +24,6 @@ class RoomTest extends TestCase
         $relatedClasses = $room->tertiarysectionclass;
 
         $this->assertGreaterThan(0, $relatedClasses->count());
-        $this->assertInstanceOf(TertiarySectionClass::class, $relatedClasses->first());
+        $this->assertInstanceOf(ClassTimeSlot::class, $relatedClasses->first());
     }
 }

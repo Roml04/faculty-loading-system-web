@@ -3,9 +3,9 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Program;
-use App\Models\TertiarySection;
+use App\Models\Section;
 use Database\Seeders\ProgramSeeder;
-use Database\Seeders\TertiarySectionSeeder;
+use Database\Seeders\SectionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,7 +16,7 @@ class ProgramTest extends TestCase
     
     public function test_program_has_many_tertiary_sections() {
         $this->seed(ProgramSeeder::class);
-        $this->seed(TertiarySectionSeeder::class);
+        $this->seed(SectionSeeder::class);
 
         $program = Program::first();
 
@@ -24,6 +24,6 @@ class ProgramTest extends TestCase
         $relatedSections = $program->tertiarysection;
 
         $this->assertGreaterThan(0, $relatedSections->count());
-        $this->assertInstanceOf(TertiarySection::class, $relatedSections->first());
+        $this->assertInstanceOf(Section::class, $relatedSections->first());
     }
 }
