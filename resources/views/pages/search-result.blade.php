@@ -19,7 +19,7 @@
                 @if ($search_results != null)
                     <ul class="flex flex-col gap-2">
                         @foreach ($search_results as $item)
-                            <x-molecules.section-list :sectionname="$item"/>
+                            <x-molecules.section-list :sectionname="$item" :sectionid="1"/>
                         @endforeach
                     </ul>
                 @else
