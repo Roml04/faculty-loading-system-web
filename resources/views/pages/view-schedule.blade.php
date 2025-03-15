@@ -1,5 +1,9 @@
 <title>{{ $sectionname }}</title>
 
+@php
+    
+@endphp
+
 <x-layout>
     <main class="w-full flex flex-col h-fit gap-8 px-20 py-10">
         <div class="flex items-center gap-4">
@@ -11,7 +15,6 @@
             {{-- Needs to be dynamic --}}
             <h1>{{ $sectionname }}</h1>
         </div>
-        {{-- <p>test</p> --}}
         <div id="calendar" class="h-full"></div>
         @push('scripts')
             <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js'></script>
@@ -23,10 +26,11 @@
                     initialView: 'timeGridWeek',
                     headerToolbar: false,
                     allDaySlot: false,
-                    slotMinTime: "06:00:00",
-                    slotMaxTime: "20:00:00",
+                    slotMinTime: "6:00:00",
+                    slotMaxTime: "21:00:00",
                     hiddenDays: [0],
-                    dayHeaderFormat: { weekday: 'long' }
+                    dayHeaderFormat: { weekday: 'long' },
+                    events: '/schedule/getclasstimeslots'
                   });
                   calendar.render();
                 });

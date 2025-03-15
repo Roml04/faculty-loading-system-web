@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassTimeSlotController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -297,3 +298,5 @@ Route::get('/view-schedule/{sectionid}', function($sectionid) {
 
     return view('pages.view-schedule', ['sectionname' => $sectionname]);
 })->name('view.schedule');
+
+Route::get('/schedule/getclasstimeslots', [ClassTimeSlotController::class, 'get_classtimeslots'])->name('get.schedule');
