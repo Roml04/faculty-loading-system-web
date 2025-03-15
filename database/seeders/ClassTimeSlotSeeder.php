@@ -6,6 +6,7 @@ use App\Models\ClassTimeSlot;
 use App\Models\Course;
 use App\Models\Room;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,22 +21,19 @@ class ClassTimeSlotSeeder extends Seeder
             $teacher = Teacher::inRandomOrder()->first();
             $course = Course::inRandomOrder()->first();
             $room = Room::inRandomOrder()->first();
+
+            $startHours = rand(6, 16);
+            $minutes = rand(0, 1) * 30;
+            $seconds = '00';
+            $duration = rand(1, 4);
             
             ClassTimeSlot::create([
                 'teachers_id' => $teacher->id,
                 'courses_id' => $course->id,
                 'rooms_id' => $room->id,
-                // seeder for column class time start
-                // seeder for column class time end
-                'day_of_week' => fake()->randomElement([
-                    'monday', 
-                    'tuesday', 
-                    'wednesday', 
-                    'thursday', 
-                    'friday', 
-                    'saturday', 
-                    'sunday'
-                ])
+                'day_of_week' => rand(1, 6),
+                'start' => Carbon::createFromTime($startHours, $minutes, $seconds)->format('H:i:s'),
+                'end' => Carbon::createFromTime($startHours + $duration, $minutes, $seconds)->format('H:i:s'),
             ]);
 
         }
