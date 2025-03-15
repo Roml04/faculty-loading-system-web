@@ -1,7 +1,7 @@
 <x-layout :pagetitle="$title">
     
     <main class="w-full flex flex-col h-fit gap-8">
-        <section style="background: url('{{ asset('assets/images/banner.jpg') }}')" class="banner-section flex flex-col w-full p-20 gap-20">
+        <section style="background: url('{{ asset('assets/images/banner.webp') }}')" class="banner-section flex flex-col w-full p-20 gap-20">
             <div class="flex flex-col text-txtclr_primary">
                 <p class="text-subheadline">STI Faculty Loading System's</p>
                 <p class="text-headline">SCHEDULE VIEWER</p>

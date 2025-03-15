@@ -1,4 +1,4 @@
-@props(['id' => null, 'level' => null, 'programname' => 'Unknown', 'path' => 'assets/images/cularts.jpg'])
+@props(['id' => null, 'level' => null, 'programname' => 'Unknown', 'path' => 'assets/images/cularts.webp'])
 
 <style>
     .program-card {

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function() {
 
     $programs = collect([
-        ["id" => 0, 'level' => 'ter', "programname" => "Computer Science", "pathtopic" => 'assets/images/cs.jpg', 
+        ["id" => 0, 'level' => 'ter', "programname" => "Computer Science", "pathtopic" => 'assets/images/cs.webp', 
             "sections" => [
                 ["id" => 0, "name" => 'BSCS101',],
                 ["id" => 1, "name" => 'BSCS301',],
@@ -16,7 +16,7 @@ Route::get('/', function() {
                 ["id" => 5, "name" => 'BSCS701',],
             ]
         ], 
-        ["id" => 1, 'level' => 'ter', "programname" => "Information Technology", "pathtopic" => 'assets/images/it.jpg',
+        ["id" => 1, 'level' => 'ter', "programname" => "Information Technology", "pathtopic" => 'assets/images/it.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BSIT101',],
                 ["id" => 1, "name" => 'BSIT102',],
@@ -26,7 +26,7 @@ Route::get('/', function() {
                 ["id" => 5, "name" => 'BSIT701',],
             ]
         ], 
-        ["id" => 2, 'level' => 'ter', "programname" => "Computer Engineering", "pathtopic" => 'assets/images/cpe.jpg',
+        ["id" => 2, 'level' => 'ter', "programname" => "Computer Engineering", "pathtopic" => 'assets/images/cpe.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BSCpE101',],
                 ["id" => 1, "name" => 'BSCpE301',],
@@ -38,7 +38,7 @@ Route::get('/', function() {
                 ["id" => 7, "name" => 'BSCpE701',],
             ]
         ], 
-        ["id" => 3, 'level' => 'ter', "programname" => "Multimedia Arts", "pathtopic" => 'assets/images/mma.jpg',
+        ["id" => 3, 'level' => 'ter', "programname" => "Multimedia Arts", "pathtopic" => 'assets/images/mma.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BMMA101',],
                 ["id" => 1, "name" => 'BMMA501',],
@@ -48,7 +48,7 @@ Route::get('/', function() {
                 ["id" => 5, "name" => 'BMMA701',],
             ]
         ],
-        ["id" => 4, 'level' => 'ter', "programname" => "Tourism Management", "pathtopic" => 'assets/images/tm.jpg',
+        ["id" => 4, 'level' => 'ter', "programname" => "Tourism Management", "pathtopic" => 'assets/images/tm.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BSTM101',],
                 ["id" => 1, "name" => 'BSTM501',],
@@ -58,14 +58,14 @@ Route::get('/', function() {
                 ["id" => 5, "name" => 'BSTM701',],
             ]
         ],
-        ["id" => 5, 'level' => 'shs', "programname" => "ABM", "pathtopic" => 'assets/images/abm.jpg',
+        ["id" => 5, 'level' => 'shs', "programname" => "ABM", "pathtopic" => 'assets/images/abm.webp',
             "sections" => [
                 ["id" => 0, "name" => 'ABM101',],
                 ["id" => 1, "name" => 'ABM301',],
                 ["id" => 2, "name" => 'ABM302',],
             ]
         ], 
-        ["id" => 6, 'level' => 'shs', "programname" => "STEM", "pathtopic" => 'assets/images/stem.jpg',
+        ["id" => 6, 'level' => 'shs', "programname" => "STEM", "pathtopic" => 'assets/images/stem.webp',
             "sections" => [
                 ["id" => 0, "name" => 'STEM101',],
                 ["id" => 1, "name" => 'STEM201',],
@@ -73,7 +73,7 @@ Route::get('/', function() {
                 ["id" => 3, "name" => 'STEM203',],
             ]
         ], 
-        ["id" => 7, 'level' => 'shs', "programname" => "Culinary Arts", "pathtopic" => 'assets/images/cularts.jpg',
+        ["id" => 7, 'level' => 'shs', "programname" => "Culinary Arts", "pathtopic" => 'assets/images/cularts.webp',
             "sections" => [
                 ["id" => 0, "name" => 'CA101',],
                 ["id" => 1, "name" => 'CA201',],
@@ -81,7 +81,7 @@ Route::get('/', function() {
                 ["id" => 3, "name" => 'CA203',],
             ]
         ], 
-        ["id" => 8, 'level' => 'shs', "programname" => "ITMAWD", "pathtopic" => 'assets/images/itmawd.jpg',
+        ["id" => 8, 'level' => 'shs', "programname" => "ITMAWD", "pathtopic" => 'assets/images/itmawd.webp',
             "sections" => [
                 ["id" => 0, "name" => 'ITMAWD101',],
                 ["id" => 1, "name" => 'ITMAWD201',],
@@ -116,7 +116,7 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/sections/{itemid}', function($itemid) {
 
     $programs = collect([
-        ["id" => 0, 'level' => 'ter', "programname" => "Computer Science", "pathtopic" => 'assets/images/cs.jpg', 
+        ["id" => 0, 'level' => 'ter', "programname" => "Computer Science", "pathtopic" => 'assets/images/cs.webp', 
             "sections" => [
                 ["id" => 0, "name" => 'BSCS101',],
                 ["id" => 1, "name" => 'BSCS301',],
@@ -126,7 +126,7 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 5, "name" => 'BSCS701',],
             ]
         ], 
-        ["id" => 1, 'level' => 'ter', "programname" => "Information Technology", "pathtopic" => 'assets/images/it.jpg',
+        ["id" => 1, 'level' => 'ter', "programname" => "Information Technology", "pathtopic" => 'assets/images/it.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BSIT101',],
                 ["id" => 1, "name" => 'BSIT102',],
@@ -136,7 +136,7 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 5, "name" => 'BSIT701',],
             ]
         ], 
-        ["id" => 2, 'level' => 'ter', "programname" => "Computer Engineering", "pathtopic" => 'assets/images/cpe.jpg',
+        ["id" => 2, 'level' => 'ter', "programname" => "Computer Engineering", "pathtopic" => 'assets/images/cpe.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BSCpE101',],
                 ["id" => 1, "name" => 'BSCpE301',],
@@ -148,7 +148,7 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 7, "name" => 'BSCpE701',],
             ]
         ], 
-        ["id" => 3, 'level' => 'ter', "programname" => "Multimedia Arts", "pathtopic" => 'assets/images/mma.jpg',
+        ["id" => 3, 'level' => 'ter', "programname" => "Multimedia Arts", "pathtopic" => 'assets/images/mma.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BMMA101',],
                 ["id" => 1, "name" => 'BMMA501',],
@@ -158,7 +158,7 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 5, "name" => 'BMMA701',],
             ]
         ],
-        ["id" => 4, 'level' => 'ter', "programname" => "Tourism Management", "pathtopic" => 'assets/images/tm.jpg',
+        ["id" => 4, 'level' => 'ter', "programname" => "Tourism Management", "pathtopic" => 'assets/images/tm.webp',
             "sections" => [
                 ["id" => 0, "name" => 'BSTM101',],
                 ["id" => 1, "name" => 'BSTM501',],
@@ -168,14 +168,14 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 5, "name" => 'BSTM701',],
             ]
         ],
-        ["id" => 5, 'level' => 'shs', "programname" => "ABM", "pathtopic" => 'assets/images/abm.jpg',
+        ["id" => 5, 'level' => 'shs', "programname" => "ABM", "pathtopic" => 'assets/images/abm.webp',
             "sections" => [
                 ["id" => 0, "name" => 'ABM101',],
                 ["id" => 1, "name" => 'ABM301',],
                 ["id" => 2, "name" => 'ABM302',],
             ]
         ], 
-        ["id" => 6, 'level' => 'shs', "programname" => "STEM", "pathtopic" => 'assets/images/stem.jpg',
+        ["id" => 6, 'level' => 'shs', "programname" => "STEM", "pathtopic" => 'assets/images/stem.webp',
             "sections" => [
                 ["id" => 0, "name" => 'STEM101',],
                 ["id" => 1, "name" => 'STEM201',],
@@ -183,7 +183,7 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 3, "name" => 'STEM203',],
             ]
         ], 
-        ["id" => 7, 'level' => 'shs', "programname" => "Culinary Arts", "pathtopic" => 'assets/images/cularts.jpg',
+        ["id" => 7, 'level' => 'shs', "programname" => "Culinary Arts", "pathtopic" => 'assets/images/cularts.webp',
             "sections" => [
                 ["id" => 0, "name" => 'CA101',],
                 ["id" => 1, "name" => 'CA201',],
@@ -191,7 +191,7 @@ Route::get('/sections/{itemid}', function($itemid) {
                 ["id" => 3, "name" => 'CA203',],
             ]
         ], 
-        ["id" => 8, 'level' => 'shs', "programname" => "ITMAWD", "pathtopic" => 'assets/images/itmawd.jpg',
+        ["id" => 8, 'level' => 'shs', "programname" => "ITMAWD", "pathtopic" => 'assets/images/itmawd.webp',
             "sections" => [
                 ["id" => 0, "name" => 'ITMAWD101',],
                 ["id" => 1, "name" => 'ITMAWD201',],
