@@ -18,16 +18,7 @@ return new class extends Migration
             $table->foreignId('rooms_id')->constrained()->onDelete('cascade');
             $table->time('start');
             $table->time('end');
-            $table->text('day_of_week')->
-                check("day_of_week IN (
-                    'monday', 
-                    'tuesday', 
-                    'wednesday', 
-                    'thursday', 
-                    'friday', 
-                    'saturday', 
-                    'sunday'"
-                );
+            $table->tinyInteger('day_of_week');
             $table->timestamps();
         });
     }
