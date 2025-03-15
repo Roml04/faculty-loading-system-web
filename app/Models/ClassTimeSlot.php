@@ -11,7 +11,7 @@ class ClassTimeSlot extends Model
     }
 
     public function course() {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class, 'courses_id');
     }
 
     public function room() {
