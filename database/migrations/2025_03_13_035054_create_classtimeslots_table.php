@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('teachers_id')->constrained()->onDelete('cascade');
             $table->foreignId('courses_id')->constrained()->onDelete('cascade');
             $table->foreignId('rooms_id')->constrained()->onDelete('cascade');
+            $table->time('start');
+            $table->time('end');
             $table->text('day_of_week')->
                 check("day_of_week IN (
                     'monday', 
@@ -26,8 +28,6 @@ return new class extends Migration
                     'saturday', 
                     'sunday'"
                 );
-            // column for storing day of the week with class time start
-            // column for storing day of the week with class time end
             $table->timestamps();
         });
     }
