@@ -13,7 +13,7 @@
                 <h2 class="mb-4">TERTIARY</h2>
                 <div class="grid grid-cols-3 gap-2">
                     @foreach ($courses as $item)
-                        <x-molecules.program-card :id="$item['id']" :level="$item['level']" :path="$item['pathtopic']" :programname="$item['programname']"/>
+                        <x-molecules.program-card :id="$item->id" :level="$item->level" :programname="$item->program_name" :path="$item->path"/>
                     @endforeach
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <h2 class="mb-4">SENIOR HIGH SCHOOL</h2>
                 <div class="grid grid-cols-3 gap-2">
                     @foreach ($strands as $item)
-                        <x-molecules.program-card :id="$item['id']" :level="$item['level']" :programname="$item['programname']" :path="$item['pathtopic']" :/>
+                        <x-molecules.program-card :id="$item->id" :level="$item->level" :programname="$item->program_name" :path="$item->path"/>
                     @endforeach
                 </div>
             </div>
