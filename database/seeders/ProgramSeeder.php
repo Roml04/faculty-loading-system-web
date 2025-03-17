@@ -30,7 +30,8 @@ class ProgramSeeder extends Seeder
         foreach($programs as $program) {
             Program::create([
                 'program_name' => $program[0],
-                'level' => $program[1]
+                'level' => $program[1],
+                'path' => 'assets/images/' . str_replace(" ", "", strtolower($program[0])) . '.webp'
             ]);
         }
     }
