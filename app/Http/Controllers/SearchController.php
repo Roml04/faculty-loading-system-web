@@ -8,18 +8,13 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public function search(Request $request) {
-
-        $sections = Section::get();
-
-        $search_results = [];
+        
         $search_query = $request['search_query'];
-        foreach($sections as $section) {
-            if (stripos($section->section_name, strtoupper($search_query)) !== false) {
-                $search_results[] = $section->section_name;
-            }
-        }
+        $search_results = Section::where('section_name', 'LIKE', sprintf('%%%s%%', $search_query))->get();
 
-        return view('pages.search-result', ['search_results' => $search_results, 'search_query' => $request['search_query']]);
+        $pagetitle = "Search results for " . $search_query;
+
+        return view('pages.search-result', ['pagetitle' => $pagetitle, 'search_results' => $search_results, 'search_query' => $search_query]);
 
     }
 }
