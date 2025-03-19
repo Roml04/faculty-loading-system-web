@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public function search(Request $request) {
-        
-        // Database
-        // Fetch section name and id based on the search query
 
         $sections = Section::get();
 
