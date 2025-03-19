@@ -19,6 +19,6 @@ class ClassTimeSlot extends Model
     }
 
     public function section() {
-        return $this->belongsToMany(Section::class);
+        return $this->belongsToMany(Section::class, 'section_time_slots', 'class_time_slots_id', 'sections_id');
     }
 }
