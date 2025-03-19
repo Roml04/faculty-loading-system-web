@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProgramController extends Controller
 {
@@ -26,6 +28,10 @@ class ProgramController extends Controller
         $strands = [];
 
         foreach($programs as $program) {
+
+            if(!(file_exists(public_path($program->path)))) {
+                $program->path = 'assets/images/no-img.jpg';
+            }
 
             switch ($program->level) {
                 case "ter":

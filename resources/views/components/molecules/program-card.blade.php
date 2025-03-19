@@ -1,4 +1,4 @@
-@props(['id' => null, 'level' => null, 'programname' => 'Unknown', 'path' => 'assets/images/abm.webp'])
+@props(['id' => null, 'level' => null, 'programname' => 'Unknown', 'path' => 'assets/images/no-img.jpg'])
 
 <style>
     .program-card {
