@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
-    public function index($id) {
+    public function indexSections($id) {
         $program = Program::where('id', $id)->first();
 
         $sections = $program->section;
@@ -15,7 +16,10 @@ class SectionController extends Controller
         return view('pages.section-schedules', ['sections' => $sections, 'program_name' => $program->program_name]);
     }
 
-    public function show($id) {
-        // $program = 
+    public function viewSection($id) {
+
+        $section = Section::whereId($id)->first();
+
+        return view('pages.view-schedule', ['id' => $id, 'sectionname' => $section->section_name]);
     }
 }
