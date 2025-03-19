@@ -17,7 +17,8 @@
         </div>
         <div id="calendar" class="h-full"></div>
         @push('scripts')
-            <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js'></script>
+
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
             <script>
 
                 document.addEventListener('DOMContentLoaded', function() {
