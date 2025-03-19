@@ -1,8 +1,5 @@
-@php
-    $title = 'Search Results for ' . $search_query;
-@endphp
+<x-layout :pagetitle="$pagetitle">
 
-<x-layout :pagetitle="$title">
     <main class="flex flex-col h-full gap-8">
         <section style="background: url('{{ asset('assets/images/banner.webp') }}')" class="banner-section flex flex-col w-full px-20 py-10">
             <x-molecules.search-bar :inputvalue="$search_query"/>
@@ -16,10 +13,10 @@
             </a>
             <div class="flex flex-col gap-4">
                 <h1>Results for '{{ $search_query }}'</h1>
-                @if ($search_results != null)
+                @if (count($search_results) !== 0)
                     <ul class="flex flex-col gap-2">
                         @foreach ($search_results as $item)
-                            <x-molecules.section-list :sectionname="$item"/>
+                            <x-molecules.section-list :sectionname="$item->section_name" :id="$item->id"/>
                         @endforeach
                     </ul>
                 @else
@@ -27,6 +24,8 @@
                         <p class="text-txtclr_gray">No available schedules match your search</p>
                     </div>
                 @endif
+
+                
             </div>
         </section>
     </main>

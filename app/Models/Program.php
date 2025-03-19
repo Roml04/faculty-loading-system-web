@@ -9,7 +9,7 @@ class Program extends Model
 {
     use HasFactory;
 
-    public function tertiarysection() {
-        return $this->hasMany(Section::class);
+    public function section() {
+        return $this->hasMany(Section::class, 'programs_id');
     }
 }

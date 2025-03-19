@@ -14,18 +14,24 @@ class ProgramSeeder extends Seeder
     public function run(): void
     {
         $programs = [
-            'Computer Science',
-            'Information Technology',
-            'Business Administration',
-            'Hospitality Management',
-            'Accountancy',
-            'Tourism Management',
-            'Computer Engineering'
+            ['Accountancy', 'ter'],
+            ['Computer Engineering', 'ter'],
+            ['Computer Science', 'ter'],
+            ['Business Administration', 'ter'],
+            ['Hospitality Management', 'ter'],
+            ['Information Technology', 'ter'],
+            ['Tourism Management', 'ter'],
+            ['ABM', 'shs'],
+            ['Culinary Arts', 'shs'],
+            ['ITMAWD', 'shs'],
+            ['STEM', 'shs'],
         ];
         
         foreach($programs as $program) {
             Program::create([
-                'program_name' => $program
+                'program_name' => $program[0],
+                'level' => $program[1],
+                'path' => 'assets/images/' . str_replace(" ", "", strtolower($program[0])) . '.webp'
             ]);
         }
     }

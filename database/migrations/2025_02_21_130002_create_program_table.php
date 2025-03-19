@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
+            $table->text('level')->check("level IN ('shs', 'ter')");
             $table->string('program_name');
+            $table->text('path')->nullable();
             $table->timestamps();
         });
     }
