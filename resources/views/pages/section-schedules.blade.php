@@ -15,7 +15,7 @@
             @if (count($sections) !== 0)
                 <ul class="flex flex-col gap-2">
                     @foreach ($sections as $item)
-                        <x-molecules.section-list :sectionname="$item->section_name" :sectionid="$item->id"/>
+                        <x-molecules.section-list :sectionname="$item->section_name" :id="$item->id"/>
                     @endforeach
                 </ul>
             @else
