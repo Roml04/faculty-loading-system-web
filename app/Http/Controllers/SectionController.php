@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
-    public function show($id) {
+    public function index($id) {
         $program = Program::where('id', $id)->first();
 
         $sections = $program->section;
 
         return view('pages.section-schedules', ['sections' => $sections, 'program_name' => $program->program_name]);
+    }
+
+    public function show($id) {
+        // $program = 
     }
 }
