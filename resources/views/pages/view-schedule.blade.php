@@ -30,9 +30,6 @@
                     eventDidMount: function (info) {
                         let eventEl = info.el;
 
-                        console.log(info);
-                        console.log(eventEl);
-
                         let details = document.createElement("div");
                         details.classList.add("fc-event-extended-props")
                         
