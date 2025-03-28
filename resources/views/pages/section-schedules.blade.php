@@ -19,9 +19,7 @@
                     @endforeach
                 </ul>
             @else
-                <div class="flex justify-center bg-bgcolor_lightgray py-8 rounded-md">
-                    <p class="text-txtclr_gray">No available schedules match your search</p>
-                </div>
+                <x-molecules.index-message :message="'No available sections'"/>
             @endif
         </div>
     </main>
