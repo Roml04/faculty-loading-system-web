@@ -26,11 +26,34 @@
                     slotMaxTime: "21:00:00",
                     hiddenDays: [0],
                     dayHeaderFormat: { weekday: 'long' },
-                    events: '/fetchtimeslots/{{ $id }}'
+                    events: '/fetchtimeslots/{{ $id }}',
+                    eventDidMount: function (info) {
+                        let eventEl = info.el;
+
+                        console.log(info);
+                        console.log(eventEl);
+
+                        let details = document.createElement("div");
+                        details.classList.add("fc-event-extended-props")
+                        
+                        let teacherName = info.event.extendedProps.teacherName;
+                        let roomNumber = info.event.extendedProps.roomNumber;
+                        let roomType = info.event.extendedProps.roomType;
+
+                        details.innerHTML = `
+                            <small>${teacherName}</small>
+                            <small>${roomNumber}</small>
+                            <small>${roomType.toUpperCase()}</small>
+                        `;
+
+                        eventFieldParentEl = eventEl.querySelector(".fc-event-main-frame");
+
+                        eventFieldParentEl.appendChild(details);
+                    },
                   });
                   calendar.render();
                 });
-          
+                
               </script>
         @endpush
     </main>
