@@ -22,7 +22,7 @@ class ClassTimeSlotController extends Controller
                 "extendedProps" => [
                     "teacherName" => $classtimeslot->teachers->teacher_name,
                     "roomNumber" => $classtimeslot->rooms->room_name,
-                    "roomType" => $classtimeslot->rooms->room_type,
+                    "roomType" => ucfirst($classtimeslot->rooms->room_type),
                 ]
             ];
         }
