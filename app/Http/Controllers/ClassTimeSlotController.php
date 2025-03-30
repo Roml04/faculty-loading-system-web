@@ -15,10 +15,15 @@ class ClassTimeSlotController extends Controller
         foreach($classtimeslots as $classtimeslot) {
 
             $events[] = [
-                "title" => $classtimeslot->course->course_name,
+                "title" => $classtimeslot->courses->course_name,
                 "startTime" => $classtimeslot->start,
                 "endTime" => $classtimeslot->end,
-                "daysOfWeek" => [$classtimeslot->day_of_week]
+                "daysOfWeek" => [$classtimeslot->day_of_week],
+                "extendedProps" => [
+                    "teacherName" => $classtimeslot->teachers->teacher_name,
+                    "roomNumber" => $classtimeslot->rooms->room_name,
+                    "roomType" => ucfirst($classtimeslot->rooms->room_type),
+                ]
             ];
         }
 
