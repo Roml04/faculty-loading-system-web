@@ -6564,7 +6564,6 @@
                 "laravel/framework": "^11.39.1",
                 "laravel/pint": "^1.20.0",
                 "laravel/sail": "^1.40.0",
-                "laravel/sanctum": "^4.0.7",
                 "laravel/tinker": "^2.10.0",
                 "orchestra/testbench-core": "^9.9.2",
                 "pestphp/pest": "^3.7.3",
