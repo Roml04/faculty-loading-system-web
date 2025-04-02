@@ -2,27 +2,46 @@
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function () {
+Route::post('/user', function (Request $request) {
 
-    $user = User::create([
-        'name' => 'admin',
-        'email' => 'admin@gmail.com',
-        'password' => 'admin1234'
-    ]);
+    try {
 
-    $token = $user->createToken(str_replace(' ', '_', $user->name) . "_token");
+        $validated = $request->validate([
+            "name" => "string",
+            "email" => "email",
+            "password" => "string"
+        ]);
+        
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+        ]);
 
-    return "Successfully created admin: " . $token->plainTextToken;
+        $token = $user->createToken(str_replace(' ', '_', strtolower($user->name)) . "_token");
+
+        return response()->json(["message" => $token->plainTextToken]);
+    } 
+
+    catch(Exception $error) {
+        return ["message" => $error->getMessage()];
+    }
+
 });
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::post('/publish', function(Request $request) {
 
-    Route::get('/auth/register', function(Request $request) {
+    try {
+        return ['message' => "Publication Successful"];
+    }
 
-        return "Success!";
+    catch(Exception $error) {
 
-    });
+        return ['message' => $error->getMessage()];
     
-});
+    }
+    
+})->middleware('auth:sanctum');
