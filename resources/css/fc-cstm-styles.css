@@ -33,6 +33,10 @@
     border: none !important;
 }
 
+.fc .fc-timegrid-slot-label {
+    vertical-align: top;
+}
+
 /* FullCalendar Scroller */
 
 th > .fc-scroller-harness > div {
