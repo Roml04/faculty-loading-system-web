@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    use HasFactory;
+    
+    protected $fillable = ['course_name'];
 
     public function tertiarysectionclass() {
         return $this->hasMany(ClassTimeSlot::class);

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
+
+    protected $fillable = ['section_name', 'year', 'term', 'programs_id'];
+    
     public function program() {
         return $this->belongsTo(Program::class, 'programs_id');
     }
