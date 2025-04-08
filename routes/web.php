@@ -14,4 +14,4 @@ Route::get('/sections/{id}', [SectionController::class, 'indexSections'])->name(
 
 Route::get('/sections/schedule/{id}', [SectionController::class, 'viewSection'])->name('view.schedule');
 
-Route::get('/fetchtimeslots/{id}', [ClassTimeSlotController::class, 'fetchTimeslots'])->name('get.schedule');
+Route::get('/timeslot/{id}', [ClassTimeSlotController::class, 'fetchTimeslots'])->name('get.schedule');

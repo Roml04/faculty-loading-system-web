@@ -29,7 +29,7 @@
                     slotMaxTime: "21:00:00",
                     hiddenDays: [0],
                     dayHeaderFormat: { weekday: 'long' },
-                    events: '/fetchtimeslots/{{ $id }}',
+                    events: '/timeslot/{{ $id }}',
                     eventContent: function(info) {
                         let title = info.event.title;
                         let roomType = info.event.extendedProps.roomType;
