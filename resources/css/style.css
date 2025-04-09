@@ -25,6 +25,11 @@
     z-index: 1;
 }
 
+.icons {
+    width: 1rem;
+    aspect-ratio: 1/1;
+}
+
 .footer-icon {
     width: 2rem;
     aspect-ratio: 1/1;
