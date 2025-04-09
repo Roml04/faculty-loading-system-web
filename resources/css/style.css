@@ -32,7 +32,7 @@
 
 @media screen and (max-width: 639px) {
     html {
-        font-size: 12px;
+        font-size: 14px;
     }
     .text-headline {
         line-height: 45px;
