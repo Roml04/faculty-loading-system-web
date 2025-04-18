@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Program;
 use App\Models\Section;
-use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
     public function indexSections($id) {
         $program = Program::where('id', $id)->first();
 
-        $sections = $program->section;
+        $sections = [];
+
+        foreach($program->section as $section) {
+            if(count($section->classtimeslot) > 0) {
+                $sections[] = $section;
+            }
+        }
 
         return view('pages.section-schedules', ['sections' => $sections, 'program_name' => $program->program_name]);
     }
