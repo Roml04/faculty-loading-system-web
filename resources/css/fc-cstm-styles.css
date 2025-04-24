@@ -17,7 +17,7 @@
 
 .fc-scroller::-webkit-scrollbar {
     width: 8px;
-    height: px;
+    height: 2px;
 }
 
 .fc .fc-timegrid-slot-label {
@@ -57,19 +57,43 @@ th > .fc-scroller-harness > div {
 /* Custom FullCalendar Styles */
 
 .cstm-fc-event-field {
-    /* background-color: var(--bs-primary); */
-    /* border-radius: 100rem; */
     @apply bg-primary rounded-full
 }
 
+.cstm-fc-event-field > svg {
+    @apply aspect-square min-w-4
+}
+
+.cstm-fc-event-field > p {
+    @apply overflow-hidden text-nowrap text-ellipsis
+}
+
 .cstm-fc-event-title {
-    /* padding: 0.25rem; */
     @apply p-1
 }
 
 .cstm-fc-event-field {
-    /* padding: 0.25rem 0.75rem; */
-    @apply p-2 flex items-center
+    @apply p-2 flex items-center 
+}
+
+.cstm-fc-event-popup {
+    @apply w-3/4 lg:w-2/5 h-fit bg-white border border-stroke_lightblue z-10 p-6 md:p-3
+}
+
+.cstm-fc-event-popup::backdrop {
+    @apply bg-[rgba(0,0,0,0.5)]
+}
+
+.cstm-fc-popup-field {
+    @apply p-4 md:p-3 bg-bgcolor_lightgray flex items-center gap-4 rounded-md
+}
+
+.eventitleh3 {
+    @apply text-4xl sm:text-base
+}
+
+.eventfieldpar {
+    @apply text-2xl lg:text-base !important
 }
 
 @media screen and (max-width: 639px) {
@@ -103,7 +127,7 @@ th > .fc-scroller-harness > div {
 
 @media screen and (min-width: 1024px) and (max-width: 1279px) {
     html {
-        font-size: 16x;
+        font-size: 16px;
     }
 }
 

@@ -26,8 +26,11 @@
 }
 
 .icons {
-    width: 1rem;
-    aspect-ratio: 1/1;
+    @apply w-4 aspect-square
+}
+
+.icons-lg {
+    @apply w-8 lg:w-5 aspect-square;
 }
 
 .footer-icon {

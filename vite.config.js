@@ -8,11 +8,11 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    // server: {
-    //     host: '192.168.42.64',
-    //     port: 5173,
-    //     cors: {
-    //         origin: '*'
-    //     }
-    // }
+    server: {
+        host: '192.168.42.163',
+        port: 5173,
+        cors: {
+            origin: '*'
+        }
+    }
 });

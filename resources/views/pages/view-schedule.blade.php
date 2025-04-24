@@ -3,7 +3,40 @@
 @vite(['resources/css/fc-cstm-styles.css'])
 
 <x-layout>
-    <main class="w-full flex flex-col h-full gap-3 lg:px-5 lg:pt-8">
+
+    <dialog id="eventPopup" class="cstm-fc-event-popup outline-none">
+        <div class="flex flex-col gap-4">
+            <div class="flex justify-between items-center">
+                <h3 id="event-title" class="eventitleh3">Title</h3>
+                <img src="{{ asset('assets/icons/x.svg') }}" class="icons-lg" onclick="eventPopup.close()">
+            </div>
+            <div class="cstm-fc-popup-field-container flex flex-col gap-2">
+                <div class="flex gap-4 w-full">
+                    <div class="cstm-fc-popup-field w-full">
+                        <p id="event-start" class="eventfieldpar paragraph-2 text-txtclr_black">Start Time</p>                                    
+                    </div>
+                    <img src="{{ asset('assets/icons/arrow.svg') }}" class="icons-lg">
+                    <div class="cstm-fc-popup-field w-full">
+                        <p id="event-end" class="eventfieldpar paragraph-2 text-txtclr_black">End Time</p>                                    
+                    </div>
+                </div>
+                <div class="cstm-fc-popup-field">
+                    <img src="{{ asset('assets/icons/chevron.svg') }}" class="icons-lg">
+                    <p id="event-roomtype" class="eventfieldpar paragraph-2 text-txtclr_black">Room Type</p>                                    
+                </div>
+                <div class="cstm-fc-popup-field">
+                    <img src="{{ asset('assets/icons/cube.svg') }}" class="icons-lg">
+                    <p id="event-roomnum" class="eventfieldpar paragraph-2 text-txtclr_black">Room Number</p>
+                </div>
+                <div class="cstm-fc-popup-field">
+                    <img src="{{ asset('assets/icons/person.svg') }}" class="icons-lg">
+                    <p id="event-teacher" class="eventfieldpar paragraph-2 text-txtclr_black">Teacher</p>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <main id="main-element" class="w-full flex flex-col h-full gap-3 lg:px-5 lg:pt-8">
         <div class="flex items-center gap-4 p-5 pt-8 lg:p-0">
             <a href="{{ url()->previous() }}">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,9 +46,11 @@
             <h1>{{ $sectionname }}</h1>
         </div>
         <div id="calendar" class="h-full lg:pr-0"></div>
+        
         @push('scripts')
 
             <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+
             <script>
 
                 document.addEventListener('DOMContentLoaded', function() {
@@ -36,7 +71,6 @@
                         let roomNumber = info.event.extendedProps.roomNumber;
                         let teacherName = info.event.extendedProps.teacherName;
 
-                        console.log(info.timeText)
                         return {
                             html: `
                             <div class="cstm-fc-event-container flex flex-col gap-2">
@@ -63,11 +97,53 @@
                                 </div>
                             </div>`
                         };
+                    },
+                    eventClick: function(info) {
+
+                        info.jsEvent.stopPropagation();
+
+                        let title = info.event.title;
+                        let roomType = info.event.extendedProps.roomType;
+                        let roomNumber = info.event.extendedProps.roomNumber;
+                        let teacherName = info.event.extendedProps.teacherName;
+                        let timeStart = info.event.start;
+                        let timeEnd = info.event.end;
+                        
+                        const eventPopup = document.getElementById('eventPopup');
+
+                        const eventTitle = document.getElementById('event-title');
+                        const eventRoomType = document.getElementById('event-roomtype');
+                        const eventRoomNumber = document.getElementById('event-roomnum');
+                        const eventTeacherName = document.getElementById('event-teacher');
+                        const eventStart = document.getElementById('event-start');
+                        const eventEnd = document.getElementById('event-end');
+                        eventTitle.textContent = title;
+                        eventRoomType.textContent = roomType;
+                        eventRoomNumber.textContent = roomNumber;
+                        eventTeacherName.textContent = teacherName;
+                        eventStart.textContent = formatTime(timeStart);
+                        eventEnd.textContent = formatTime(timeEnd);
+                        
+                        eventPopup.showModal();
+                        console.log('pop up rendered');
                     }
                   });
                   calendar.render();
                 });
-                
+
+                function formatTime(time) {
+                    let hours = time.getHours();
+                    let minutes = time.getMinutes().toString().padStart(2, '0');
+                    let dayPeriod = hours >= 12 ? 'PM' : 'AM';
+                    console.log("before ", hours)
+
+                    hours = hours > 12 ? hours - 12 : hours;
+
+                    console.log(hours)
+
+                    return `${hours}:${minutes} ${dayPeriod}`;
+                }
+
               </script>
         @endpush
     </main>
