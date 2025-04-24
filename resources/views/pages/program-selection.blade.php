@@ -6,24 +6,34 @@
                 <p class="text-subheadline">STI Faculty Loading System's</p>
                 <p class="text-headline">SCHEDULE VIEWER</p>
             </div>
-            <x-molecules.search-bar/>
+            @if (count($courses) > 0 || count($strands) > 0)
+                <x-molecules.search-bar/>
+            @endif
         </section>
         <section class="flex flex-col h-full px-20 gap-8">
             <div class="w-full">
                 <h2 class="mb-4">TERTIARY</h2>
-                <div class="grid grid-cols-3 gap-2">
-                    @foreach ($courses as $item)
-                        <x-molecules.program-card :id="$item->id" :level="$item->level" :programname="$item->program_name" :path="$item->path"/>
-                    @endforeach
-                </div>
+                @if(count($courses) > 0)
+                    <div class="grid grid-cols-3 gap-2">
+                        @foreach ($courses as $item)
+                            <x-molecules.program-card :id="$item->id" :level="$item->level" :programname="$item->program_name" :path="$item->path"/>
+                        @endforeach
+                    </div>
+                @else
+                    <x-molecules.index-message :message="'There are no available schedules for the Tertiary level'"/>
+                @endif  
             </div>
             <div class="w-full">
                 <h2 class="mb-4">SENIOR HIGH SCHOOL</h2>
-                <div class="grid grid-cols-3 gap-2">
-                    @foreach ($strands as $item)
-                        <x-molecules.program-card :id="$item->id" :level="$item->level" :programname="$item->program_name" :path="$item->path"/>
-                    @endforeach
-                </div>
+                @if(count($strands) > 0)
+                    <div class="grid grid-cols-3 gap-2">
+                        @foreach ($strands as $item)
+                            <x-molecules.program-card :id="$item->id" :level="$item->level" :programname="$item->program_name" :path="$item->path"/>
+                        @endforeach
+                    </div>
+                @else
+                    <x-molecules.index-message :message="'There are no available schedules for the Senior High level'"/>
+                @endif
             </div>
         </section>
     </main>
