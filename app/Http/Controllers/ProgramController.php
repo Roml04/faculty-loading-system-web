@@ -22,7 +22,7 @@ class ProgramController extends Controller
      */
     public function show()
     {
-        $programs = Program::get();
+        $programs = Program::orderBy('program_name', 'asc')->get();
 
         $courses = [];
         $strands = [];
