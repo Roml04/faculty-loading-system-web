@@ -1,7 +1,5 @@
 #calendar {
-    border: 1px solid var(--stroke-gray);
-    border-radius: 0.25rem;
-    padding: 2.5rem 0 0.5rem 2.5rem;
+    @apply lg:p-10 lg:pr-0 lg:pb-2 border-0 lg:border border-stroke_gray rounded-md
 }
 
 .fc-event {
@@ -10,7 +8,7 @@
 }
 
 .fc-timegrid-slots tr {
-    height: 4.5rem !important;
+    height: 4.75rem !important;
 }
 
 .fc-timegrid-slots thead {
@@ -19,7 +17,15 @@
 
 .fc-scroller::-webkit-scrollbar {
     width: 8px;
-    height: px;
+    height: 2px;
+}
+
+.fc .fc-timegrid-slot-label {
+    @apply w-fit align-top
+}
+
+.fc-col-header-cell-cushion {
+    text-transform: uppercase;
 }
 
 .fc-timegrid-axis,
@@ -45,24 +51,118 @@ th > .fc-scroller-harness > div {
 }
 
 .fc-scroller::-webkit-scrollbar-track {
-    background: var(--bgclr-lightgray);
+    background: var(--bgclr-white);
 }
 
 /* Custom FullCalendar Styles */
 
-/* .cstm-fc-event-field-container {
-    
-} */
-
 .cstm-fc-event-field {
-    background-color: var(--bs-primary);
-    border-radius: 100rem;
+    @apply bg-primary rounded-full
+}
+
+.cstm-fc-event-field > svg {
+    @apply aspect-square min-w-4
+}
+
+.cstm-fc-event-field > p {
+    @apply overflow-hidden text-nowrap text-ellipsis
 }
 
 .cstm-fc-event-title {
-    padding: 0.25rem;
+    @apply p-1
 }
 
 .cstm-fc-event-field {
-    padding: 0.25rem 0.75rem;
+    @apply p-2 flex items-center 
 }
+
+.cstm-fc-event-popup {
+    @apply w-3/4 lg:w-2/5 h-fit bg-white border border-stroke_lightblue z-10 p-6 md:p-3
+}
+
+.cstm-fc-event-popup::backdrop {
+    @apply bg-[rgba(0,0,0,0.5)]
+}
+
+.cstm-fc-popup-field {
+    @apply p-4 md:p-3 bg-bgcolor_lightgray flex items-center gap-4 rounded-md
+}
+
+.eventitleh3 {
+    @apply text-4xl sm:text-base
+}
+
+.eventfieldpar {
+    @apply text-2xl lg:text-base !important
+}
+
+@media screen and (max-width: 639px) {
+    html {
+        font-size: 8px !important;
+    }
+    .text-headline {
+        line-height: 45px;
+    }
+    .text-subheadline {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 767px) {
+    html {
+        font-size: 10px;
+    }
+
+    .text-headline {
+        font-size: 3rem;
+        line-height: 50px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1535px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1536px) and (max-width: 1919px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    html {
+        font-size:24px;
+    }
+}
+
+/* @media screen and (min-aspect-ratio: 3/5) and (max-aspect-ratio: 4/3) {
+    .banner-section {
+        @apply p-12
+    }
+    .program-card-container {
+        @apply grid-cols-2
+    }
+    .programs-container {
+        @apply px-4
+    }
+}
+
+@media screen and (aspect-ratio: 5/4) {
+    .programs-container {
+        @apply px-20
+    }
+} */

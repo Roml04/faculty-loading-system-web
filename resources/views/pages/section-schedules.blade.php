@@ -1,9 +1,9 @@
 <x-layout>
     <main class="w-full flex flex-col h-fit gap-8">
-        <section style="background: url('{{ asset('assets/images/banner.webp') }}')" class="banner-section flex flex-col w-full px-20 py-10">
+        <section style="background: url('{{ asset('assets/images/banner.webp') }}')" class="banner-section flex flex-col w-full px-4 py-12 lg:px-20">
             <x-molecules.search-bar/>
         </section>
-        <div class="w-full flex flex-col h-full px-20 gap-2">
+        <section class="w-full flex flex-col h-full px-4 lg:px-20 gap-8">
             <div class="w-fit p-2 flex items-center gap-4">
                 <a href="{{ route('home') }}">
                     <svg width="29" height="32" viewBox="0 0 29 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
             @else
                 <x-molecules.index-message :message="'No available sections'"/>
             @endif
-        </div>
+        </section>
     </main>
     <x-organisms.footer/>
 </x-layout>
