@@ -1,4 +1,4 @@
-@vite(['resources/css/fc-cstm-styles.css'])
+@vite(['resources/css/calendar.css'])
 
 <x-layout :pagetitle="$sectionname">
 
@@ -48,7 +48,6 @@
         @push('scripts')
 
             <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-
             <script>
 
                 document.addEventListener('DOMContentLoaded', function() {
@@ -61,7 +60,7 @@
                     slotMinTime: "7:00:00",
                     slotMaxTime: "21:00:00",
                     hiddenDays: [0],
-                    dayHeaderFormat: { weekday: 'long' },
+                    dayHeaderFormat: { weekday: 'short' },
                     events: '/timeslot/{{ $id }}',
                     eventContent: function(info) {
                         let title = info.event.title;
@@ -123,7 +122,6 @@
                         eventEnd.textContent = formatTime(timeEnd);
                         
                         eventPopup.showModal();
-                        console.log('pop up rendered');
                     }
                   });
                   calendar.render();
@@ -133,12 +131,7 @@
                     let hours = time.getHours();
                     let minutes = time.getMinutes().toString().padStart(2, '0');
                     let dayPeriod = hours >= 12 ? 'PM' : 'AM';
-                    console.log("before ", hours)
-
                     hours = hours > 12 ? hours - 12 : hours;
-
-                    console.log(hours)
-
                     return `${hours}:${minutes} ${dayPeriod}`;
                 }
 
