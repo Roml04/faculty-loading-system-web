@@ -18,7 +18,7 @@ class SectionController extends Controller
             }
         }
 
-        return view('pages.section-schedules', ['sections' => $sections, 'program_name' => $program->program_name]);
+        return view('pages.section-schedules', ['sections' => $sections, 'programname' => $program->program_name]);
     }
 
     public function viewSection($id) {

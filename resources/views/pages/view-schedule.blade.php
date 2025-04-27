@@ -1,8 +1,6 @@
-<title>{{ $sectionname }}</title>
-
 @vite(['resources/css/fc-cstm-styles.css'])
 
-<x-layout>
+<x-layout :pagetitle="$sectionname">
 
     <dialog id="eventPopup" class="cstm-fc-event-popup outline-none">
         <div class="flex flex-col gap-4">
@@ -63,8 +61,8 @@
                     slotMinTime: "7:00:00",
                     slotMaxTime: "21:00:00",
                     hiddenDays: [0],
-                    dayHeaderFormat: { weekday: 'short' },
-                    events: '/fetchtimeslots/{{ $id }}',
+                    dayHeaderFormat: { weekday: 'long' },
+                    events: '/timeslot/{{ $id }}',
                     eventContent: function(info) {
                         let title = info.event.title;
                         let roomType = info.event.extendedProps.roomType;
