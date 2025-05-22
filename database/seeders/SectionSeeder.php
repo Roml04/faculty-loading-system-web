@@ -25,7 +25,7 @@ class SectionSeeder extends Seeder
         for($i = 0; $i < 20; $i++) {
 
             $year = fake()->randomElement([1, 2, 3, 4, 11, 12]);
-            $level = in_array($year, [1, 2, 3, 4]) ? 'ter': 'shs';
+            $level = in_array($year, [1, 2, 3, 4]) ? 'tertiary': 'shs';
 
             Section::create([
                 'section_name' => 'ABC' . array_shift($sections),

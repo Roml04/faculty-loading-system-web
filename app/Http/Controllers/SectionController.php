@@ -13,9 +13,9 @@ class SectionController extends Controller
         $sections = [];
 
         foreach($program->section as $section) {
-            if(count($section->classtimeslot) > 0) {
+            // if(count($section->classtimeslot) > 0) {
                 $sections[] = $section;
-            }
+            // }
         }
 
         return view('pages.section-schedules', ['sections' => $sections, 'programname' => $program->program_name]);
@@ -28,3 +28,4 @@ class SectionController extends Controller
         return view('pages.view-schedule', ['id' => $id, 'sectionname' => $section->section_name]);
     }
 }
+    

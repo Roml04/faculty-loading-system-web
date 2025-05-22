@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('section_name');
             $table->unsignedTinyInteger('year')->check('year IN (1, 2, 3, 4, 11, 12)');
             $table->unsignedTinyInteger('term')->check("term IN (1, 2)");
-            $table->string('level')->check("level IN ('shs', 'ter')");
+            $table->string('level')->check("level IN ('shs', 'tertiary')");
             $table->foreignId('programs_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

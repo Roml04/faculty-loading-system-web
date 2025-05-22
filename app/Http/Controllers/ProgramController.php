@@ -34,14 +34,14 @@ class ProgramController extends Controller
             }
 
             switch ($program->level) {
-                case "ter":
+                case "tertiary":
                     $courses[] = $program;
                     break;
                 case "shs":
                     $strands[] = $program;
                     break;
                 default:
-                    dd('Unkown level'); // replace with a better error
+                    break;
             }
         }
 
