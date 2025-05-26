@@ -25,7 +25,7 @@ class SectionController extends Controller
 
         $section = Section::whereId($id)->first();
 
-        return view('pages.view-schedule', ['id' => $id, 'sectionname' => $section->section_name]);
+        return view('pages.view-schedule', ['id' => $id, 'uri' => 'sections', 'pagetitle' => $section->section_name]);
     }
 }
     

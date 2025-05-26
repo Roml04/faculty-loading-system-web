@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
-use Illuminate\Http\Request;
+use App\Models\Teacher;
 
 class ClassTimeSlotController extends Controller
 {
-    public function fetchTimeslots($id) {
+    public function sectionTimeSlots($id) {
         $section = Section::whereId($id)->first();
         
         $classtimeslots = $section->classtimeslot;
@@ -23,6 +23,29 @@ class ClassTimeSlotController extends Controller
                     "teacherName" => $classtimeslot->teachers->teacher_name,
                     "roomNumber" => $classtimeslot->rooms->room_name,
                     "roomType" => ucfirst($classtimeslot->rooms->room_type),
+                ]
+            ];
+        }
+
+        return response()->json($events);
+    }
+
+    public function teacherTimeSlots($id) {
+        $teacher = Teacher::whereId($id)->first();
+
+        $teachertimeslots = $teacher->tertiarysectionclass;
+
+        foreach($teachertimeslots as $teachertimeslots) {
+
+            $events[] = [
+                "title" => $teachertimeslots->courses->course_name,
+                "startTime" => $teachertimeslots->start,
+                "endTime" => $teachertimeslots->end,
+                "daysOfWeek" => [$teachertimeslots->day_of_week],
+                "extendedProps" => [
+                    "teacherName" => $teachertimeslots->teachers->teacher_name,
+                    "roomNumber" => $teachertimeslots->rooms->room_name,
+                    "roomType" => ucfirst($teachertimeslots->rooms->room_type),
                 ]
             ];
         }
