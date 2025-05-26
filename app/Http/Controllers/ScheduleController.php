@@ -66,7 +66,15 @@ class ScheduleController extends Controller
         ]);
 
         try {
-                
+
+            SectionTimeSlot::query()->delete();
+            ClassTimeSlot::query()->delete();
+            Section::query()->delete();
+            Room::query()->delete();
+            Course::query()->delete();
+            Teacher::query()->delete();
+            Program::query()->delete();
+                            
             $programs = $validated['programs'];
             
             foreach($programs as $program) {
