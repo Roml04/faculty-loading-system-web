@@ -2,6 +2,10 @@
     @apply lg:p-10 lg:pr-0 lg:pb-2 border-0 lg:border border-stroke_gray rounded-md
 }
 
+.fc-day-today {
+  background-color: inherit !important;
+}
+
 .fc-event {
     padding: 0.25rem;
     border-radius: 0.25rem;
