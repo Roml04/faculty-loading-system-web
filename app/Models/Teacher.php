@@ -11,6 +11,6 @@ class Teacher extends Model
     protected $fillable = ['teacher_name'];
 
     public function tertiarysectionclass() {
-        return $this->hasMany(ClassTimeSlot::class);
+        return $this->hasMany(ClassTimeSlot::class, 'teachers_id', 'id');
     }
 }
