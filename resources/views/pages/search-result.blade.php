@@ -13,12 +13,24 @@
             </a>
             <div class="flex flex-col gap-4">
                 <h1>Results for '{{ $search_query }}'</h1>
-                @if (count($search_results) !== 0)
-                    <ul class="flex flex-col gap-2">
-                        @foreach ($search_results as $item)
-                            <x-molecules.section-list :sectionname="$item->section_name" :id="$item->id"/>
-                        @endforeach
-                    </ul>
+
+                @if ($has_teacher or $has_section)
+                    <div @class(['flex', 'flex-col', 'hidden' => !($has_section)])>
+                        <h2>Sections</h2>
+                        <ul class="flex flex-col gap-2">
+                            @foreach ($section_results as $item)
+                                <x-molecules.section-list :sectionname="$item->section_name" :id="$item->id"/>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div @class(['flex', 'flex-col', 'hidden' => !($has_teacher)])>
+                        <h2>Teachers</h1>
+                        <ul>
+                            @foreach($teacher_results as $item)
+                                <x-molecules.teacher-list :teachername="$item->teacher_name" :id="$item->id"/>
+                            @endforeach
+                        </ul>
+                    </div>
                 @else
                     <x-molecules.index-message :message="'No available sections matched your search'"/>
                 @endif
