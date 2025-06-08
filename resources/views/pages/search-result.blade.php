@@ -15,7 +15,7 @@
                 <h1>Results for '{{ $search_query }}'</h1>
 
                 @if ($has_teacher or $has_section)
-                    <div @class(['flex', 'flex-col', 'hidden' => !($has_section)])>
+                    <div @class(['flex', 'gap-2', 'flex-col', 'hidden' => !($has_section)])>
                         <h2>Sections</h2>
                         <ul class="flex flex-col gap-2">
                             @foreach ($section_results as $item)
@@ -23,7 +23,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div @class(['flex', 'flex-col', 'hidden' => !($has_teacher)])>
+                    <div @class(['flex', 'gap-2', 'flex-col', 'hidden' => !($has_teacher)])>
                         <h2>Teachers</h1>
                         <ul>
                             @foreach($teacher_results as $item)
