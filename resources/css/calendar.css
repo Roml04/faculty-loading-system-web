@@ -2,6 +2,10 @@
     @apply lg:p-10 lg:pr-0 lg:pb-2 border-0 lg:border border-stroke_gray rounded-md
 }
 
+.fc-event, .fc-event-start, .fc-event-end, .fc-event-past, .fc-timegrid-event, .fc-v-event {
+    overflow: hidden;
+}
+
 .fc-day-today {
   background-color: inherit !important;
 }
@@ -12,7 +16,7 @@
 }
 
 .fc-timegrid-slots tr {
-    height: 4.75rem !important;
+    height: 5.25rem !important;
 }
 
 .fc-timegrid-slots thead {

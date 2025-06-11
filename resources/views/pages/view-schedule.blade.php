@@ -71,7 +71,7 @@
                         return {
                             html: `
                             <div class="cstm-fc-event-container flex flex-col gap-2">
-                                <h3 class="cstm-fc-event-title">${title}</h3>
+                                <h3 class="text-sm">${title}</h3>
                                 <div class="cstm-fc-event-field-container flex flex-col gap-1">
                                     <div class="cstm-fc-event-field flex gap-2">
                                         <svg class="icons" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +92,8 @@
                                         <p class="paragraph-2">${teacherName}</p>
                                     </div>
                                 </div>
-                            </div>`
+                            </div>
+                            `
                         };
                     },
                     eventClick: function(info) {
@@ -107,7 +108,7 @@
                         let timeEnd = info.event.end;
                         
                         const eventPopup = document.getElementById('eventPopup');
-
+                        
                         const eventTitle = document.getElementById('event-title');
                         const eventRoomType = document.getElementById('event-roomtype');
                         const eventRoomNumber = document.getElementById('event-roomnum');
