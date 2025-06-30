@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'azure' => [    
+        'client_id' => env('fc187e1e-4043-49c9-9771-c264872ea791'),
+        'client_secret' => env('27d96d73-9f38-4ca9-96af-bc9a40f83044'),
+        'redirect' => env('http://localhost:8000'),
+        'tenant' => env('86115171-cfc3-4bbd-83d1-c0cad83c3430'),
+    ],
+
 ];
