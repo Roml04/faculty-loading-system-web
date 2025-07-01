@@ -8,7 +8,7 @@
         <title>{{ $pagetitle }}</title>
         @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/css/media-queries.css', 'resources/js/app.js'])
     </head>
-    <body class="flex flex-col justify-between gap-8">
+    <body class="h-full flex flex-col justify-between gap-8">
         {{ $slot }}
         @stack('scripts')
     </body>

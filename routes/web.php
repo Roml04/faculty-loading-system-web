@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
-    return view('pages.sign-in');
+    return view('pages.sign-in', ['pagetitle' => 'Sign In']);
 })->name('login');
 
 Route::get('/board', [ProgramController::class, 'show'])->name('home');
