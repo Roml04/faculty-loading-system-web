@@ -6,6 +6,6 @@
     </div>
     <div class="flex flex-col items-center py-8 gap-8">
         <p>{{ $errormessage }}</p>
-        <a href="{{ url('/') }}" class="text-txtclr_black hover:underline hover:text-txtclr_primary rounded-md">Go back to the homepage</a>
+        <a href="{{ url('/board') }}" class="text-txtclr_black hover:underline hover:text-txtclr_primary rounded-md">Go back to the homepage</a>
     </div>
 </main>
