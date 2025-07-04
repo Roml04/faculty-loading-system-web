@@ -15,7 +15,7 @@ class EnsureUserIsTeacher
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (session('role') === 'Student') {
+        if (session('role') !== 'Teacher') {
             abort(403);
         }
         return $next($request);
