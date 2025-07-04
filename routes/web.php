@@ -5,6 +5,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Middleware\EnsureUserIsTeacher;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -15,7 +16,7 @@ Route::get('/', function () {
 
 Route::get('/board', [ProgramController::class, 'show'])->name('home');
 
-Route::get('/teachers/schedule/{id}', [TeacherController::class, 'show'])->name('teacher.schedule');
+Route::get('/teachers/schedule/{id}', [TeacherController::class, 'show'])->middleware(EnsureUserIsTeacher::class)->name('teacher.schedule');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 

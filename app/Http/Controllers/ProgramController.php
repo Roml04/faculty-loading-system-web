@@ -22,6 +22,7 @@ class ProgramController extends Controller
     public function show()
     {
         $programs = Program::orderBy('program_name', 'asc')->get();
+        $teachers = Teacher::orderBy('teacher_name', 'asc')->get();
 
         $courses = [];
         $strands = [];
@@ -44,8 +45,10 @@ class ProgramController extends Controller
             }
         }
 
-        $teachers = Teacher::orderBy('teacher_name', 'asc')->get();
+        if(session('role') === 'Student') {
+            return view('pages.program-selection', ['title' => 'Programs', 'role' => session('role'), 'courses' => $courses, 'strands' => $strands, 'teachers' => []]);
+        }
 
-        return view('pages.program-selection', ['title' => 'Programs', 'role' => session('role'), 'courses' => $courses, 'strands' => $strands, 'teachers' => $teachers]);
+        return view('pages.program-selection', ['title' => 'Programs', 'courses' => $courses, 'strands' => $strands, 'teachers' => $teachers]);
     }
 }

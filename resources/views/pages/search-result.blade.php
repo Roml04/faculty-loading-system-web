@@ -32,7 +32,7 @@
                         </ul>
                     </div>
                 @else
-                    <x-molecules.index-message :message="'No available sections matched your search'"/>
+                    <x-molecules.index-message :message="'No available schedules matched your search'"/>
                 @endif
 
                 
