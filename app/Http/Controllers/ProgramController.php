@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Program;
 use App\Models\Teacher;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProgramController extends Controller
 {
@@ -48,6 +46,6 @@ class ProgramController extends Controller
 
         $teachers = Teacher::orderBy('teacher_name', 'asc')->get();
 
-        return view('pages.program-selection', ['title' => 'Programs', 'courses' => $courses, 'strands' => $strands, 'teachers' => $teachers]);
+        return view('pages.program-selection', ['title' => 'Programs', 'role' => session('role'), 'courses' => $courses, 'strands' => $strands, 'teachers' => $teachers]);
     }
 }

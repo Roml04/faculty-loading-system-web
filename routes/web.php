@@ -5,6 +5,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -33,7 +34,22 @@ Route::get('/auth/redirect', function () {
 Route::get('/auth/callback', function () {
     $user = Socialite::driver('azure')->user();
 
-    session(['role' => 'student']);
+        
+    $response = Http::withToken($user->token)
+        ->get('https://graph.microsoft.com/v1.0/me/memberOf');
+
+    $groups = collect($response->json()['value'])->pluck('displayName');
+
+    if($groups->contains('Students')) {
+        $role = 'Student';
+    } elseif ($groups->contains('Teachers')) {
+        $role = 'Teacher';
+    } else {
+        $role = 'Unknown';
+    }
+
+    session(['role' => $role]);
+    session()->save();
 
     return redirect('/board');
 })->name('azure.callback');
