@@ -9,6 +9,7 @@ use App\Http\Middleware\EnsureUserIsTeacher;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\One\AbstractProvider;
 
 Route::get('/', function () {
     return view('pages.sign-in', ['pagetitle' => 'Sign In']);
@@ -35,15 +36,11 @@ Route::get('/auth/redirect', function () {
 Route::get('/auth/callback', function () {
     $user = Socialite::driver('azure')->user();
 
-        
-    $response = Http::withToken($user->token)
-        ->get('https://graph.microsoft.com/v1.0/me/memberOf');
+    $displayName = $user['displayName'];
 
-    $groups = collect($response->json()['value'])->pluck('displayName');
-
-    if($groups->contains('Students')) {
+    if(str_contains($displayName, '(Student)')) {
         $role = 'Student';
-    } elseif ($groups->contains('Teachers')) {
+    } elseif (str_contains($displayName, '(Faculty)')) {
         $role = 'Teacher';
     } else {
         $role = 'Unknown';
