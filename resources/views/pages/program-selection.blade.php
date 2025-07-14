@@ -4,20 +4,20 @@
     
     <main class="w-full flex h-fit flex-1">
         @if (session('role') === 'Teacher')
-            {{-- Sidebar --}}
             <section class="h-full px-2 py-8 bg-primary flex flex-col w-0 md:w-fit gap-2">
-                <form action="">
-                    <label class="">
-                        <a class="flex items-center hover:bg-primary_hovered active:bg-primary_pressed rounded-full justify-center px-12 py-4 gap-4" href="">
-                            <img src="{{ asset('assets/icons/book-white.svg') }}">
-                            <p class="text-txtclr_white">Programs</p>
-                        </a>
+                <form action="" class="flex flex-col gap-2">
+                    @csrf
+                    <label for="programs" class="flex items-center hover:bg-primary_hovered active:bg-primary_pressed rounded-full justify-center px-12 py-4 gap-4
+                    has-[input:checked]:bg-primary_pressed" href="">
+                        <img src="{{ asset('assets/icons/book-white.svg') }}">
+                        <input class="hidden" id="programs" name='navigation' value='programs' type="radio" checked>
+                        <p class="text-txtclr_white">Programs</p>
                     </label>
-                    <label class="">
-                        <a class="flex items-center hover:bg-primary_hovered active:bg-primary_pressed rounded-full justify-center px-12 py-4 gap-4" href="">
-                            <img src="{{ asset('assets/icons/user-white.svg') }}">
-                            <p class="text-txtclr_white">Teachers</p>
-                        </a>
+                    <label for="teachers" class="flex items-center hover:bg-primary_hovered active:bg-primary_pressed rounded-full justify-center px-12 py-4 gap-4
+                    has-[input:checked]:bg-primary_pressed" href="">
+                        <img src="{{ asset('assets/icons/user-white.svg') }}">
+                        <input class="hidden" id="teachers" name='navigation' value='teachers' type="radio">
+                        <p class="text-txtclr_white">Teachers</p>
                     </label>
                 </form>
             </section>
