@@ -2,15 +2,31 @@
 
     @vite(['resources/js/program-selection.js'])
     
-    <main class="w-full flex min-h-full flex-1">
+    <main class="w-full flex h-fit flex-1">
         @if (session('role') === 'Teacher')
             {{-- Sidebar --}}
+            <section class="h-full px-2 py-8 bg-primary flex flex-col w-0 md:w-fit gap-2">
+                <form action="">
+                    <label class="">
+                        <a class="flex items-center hover:bg-primary_hovered active:bg-primary_pressed rounded-full justify-center px-12 py-4 gap-4" href="">
+                            <img src="{{ asset('assets/icons/book-white.svg') }}">
+                            <p class="text-txtclr_white">Programs</p>
+                        </a>
+                    </label>
+                    <label class="">
+                        <a class="flex items-center hover:bg-primary_hovered active:bg-primary_pressed rounded-full justify-center px-12 py-4 gap-4" href="">
+                            <img src="{{ asset('assets/icons/user-white.svg') }}">
+                            <p class="text-txtclr_white">Teachers</p>
+                        </a>
+                    </label>
+                </form>
+            </section>
         @else
-            <section class="bg-primary w-0 md:w-1/12"></section>
+            <section class="h-full bg-primary w-0 md:w-1/12"></section>
         @endif
         
-        <section class="w-full max-h-full px-4 py-8 flex flex-col gap-8">
-            <div class="flex flex-col md:flex-row justify-between gap-4">
+        <section class="w-full h-fit px-4 py-8 flex flex-col gap-8">
+            <div class="flex flex-col h-full md:flex-row justify-between gap-4">
                 <div class="flex items-center gap-4">
                     <img src="{{ asset('assets/icons/book-black.svg') }}" alt="">
                     <h1>Programs</h1>

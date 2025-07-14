@@ -32,6 +32,10 @@ p {
     line-height: 1;
 }
 
+li {
+    list-style-type: none;
+}
+
 /* Color Styles */
 
 :root {
@@ -65,14 +69,4 @@ p {
 
     --primary-gradient: linear-gradient(to top, rgba(0, 93, 166, 0.5), rgba(0, 93, 166, 0));
     --lightgray-gradient: linear-gradient(to top, var(--bgclr-lightgray) 25%, rgba(255,255,255,0) 75%);
-}
-
-/* Others */
-
-html {
-    height: 100%;
-}
-
-body {
-    min-height: 100%;
 }
