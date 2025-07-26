@@ -5,8 +5,8 @@
     <main class="w-full flex flex-col h-fit gap-8">
         <section style="background: url('{{ asset('assets/images/banner.webp') }}')" class="banner-section flex flex-col w-full px-4 py-12 lg:p-20 gap-20">
             <div class="flex flex-col text-txtclr_primary">
-                <p class="text-subheadline">STI Faculty Loading System's</p>
-                <p class="text-headline">SCHEDULE VIEWER</p>
+                <p class="text-headline">STI's ONLINE SCHEDULE</p>
+                <p class="text-subheadline">One Portal for All Academic Schedules.</p>
             </div>
             @if (count($courses) > 0 || count($strands) > 0)
                 <x-molecules.search-bar/>
@@ -70,5 +70,4 @@
             </div>
         </section>
     </main>
-    <x-organisms.footer/>
 </x-layout>

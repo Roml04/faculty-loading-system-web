@@ -24,5 +24,4 @@
             @endif
         </section>
     </main>
-    <x-organisms.footer/>
 </x-layout>
