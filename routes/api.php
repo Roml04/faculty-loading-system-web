@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AppSnapshotContoller;
 use App\Http\Controllers\ScheduleController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,3 +35,7 @@ Route::post('/user', function (Request $request) {
 });
 
 Route::post('/publish', [ScheduleController::class, 'store'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/app-snapshot', [AppSnapshotContoller::class, 'index']);
+});
