@@ -38,4 +38,5 @@ Route::post('/publish', [ScheduleController::class, 'store'])->middleware('auth:
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/app-snapshot', [AppSnapshotContoller::class, 'index']);
+    Route::post('/app-snapshot', [AppSnapshotContoller::class, 'store']);
 });
