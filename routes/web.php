@@ -37,6 +37,12 @@ Route::get('/auth/redirect', function () {
 Route::get('/auth/callback', function () {
     $user = Socialite::driver('azure')->user();
 
+    if(str_contains($user['mail'], 'la.sti.edu.ph')) {
+        session(['isSameBranch' => true]);
+    } else {
+        return view('errors.403-2');
+    }
+
     $displayName = $user['displayName'];
 
     if(str_contains($displayName, '(Student)')) {
