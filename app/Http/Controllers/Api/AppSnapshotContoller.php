@@ -10,13 +10,19 @@ use Illuminate\Http\Request;
 class AppSnapshotContoller extends Controller
 {
     public function index() {
-        $snapshot = AppSnapshot::latest()->get();
+        try {
+            $snapshot = AppSnapshot::latest()->get();
 
-        if(!$snapshot) {
-            return response()->json(['message' => 'No records found.'], 404);
+            if(!$snapshot) {
+                return response()->json(['message' => 'No records found.'], 404);
+            }
+
+            return response()->json($snapshot);
+        } catch (Exception $error) {
+            return response()->json([
+                'message' => $error->getMessage()
+            ]);
         }
-
-        return response()->json($snapshot);
     }
 
     public function store(Request $request) {
