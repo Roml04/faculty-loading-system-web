@@ -7,6 +7,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\CheckIfLoggedIn;
 use App\Http\Middleware\EnsureUserIsTeacher;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -35,26 +36,77 @@ Route::get('/auth/redirect', function () {
 })->name('azure.redirect');
 
 Route::get('/auth/callback', function () {
-    $user = Socialite::driver('azure')->user();
 
-    if(str_contains($user['mail'], 'la.sti.edu.ph')) {
+    $user = Socialite::driver('azure')->user();
+    
+    if(str_contains($user['mail'], 'calamba.sti.edu.ph')) {
         session(['isSameBranch' => true]);
     } else {
         return view('errors.403-2');
     }
 
-    $displayName = $user['displayName'];
+    if(session('source') === 'desktop') {
+        
+        $userId = $user['id'];
+        $email = $user['mail'];
+        $firstName = $user['givenName'];
+        $lastName = $user['surname'];
 
-    if(str_contains($displayName, '(Student)')) {
-        $role = 'Student';
-    } elseif (str_contains($displayName, '(Faculty)')) {
-        $role = 'Teacher';
+        $existingUser = User::where('email', $email)->first();
+
+        if(!$existingUser->wasRecentlyCreated) {
+            return view('pages.desktop.duplicate-account');
+        }
+
+        $user = User::updateOrCreate([
+            'email' => $email
+        ],[
+            'id' => $userId,
+            'name' => $firstName . ' ' . $lastName,
+            'email' => $email,
+            'password' => 'remove_password'
+        ]);
+
+        $token = $user->createToken(str_replace(' ', '_', strtolower($user->name)) . "_token");
+
+        dump(session());
+
+        return response()->json([
+            'id' => $userId,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
+            'api_token' => $token->plainTextToken
+        ]);
+        
     } else {
-        $role = 'Unknown';
+
+        $displayName = $user['displayName'];
+
+        if(str_contains($displayName, '(Student)')) {
+            $role = 'Student';
+        } elseif (str_contains($displayName, '(Faculty)')) {
+            $role = 'Teacher';
+        } else {
+            $role = 'Unknown';
+        }
+
+        session(['role' => $role]);
+        session()->save();
+
+        return redirect('/board');
     }
 
-    session(['role' => $role]);
-    session()->save();
-
-    return redirect('/board');
+    
 })->name('azure.callback');
+
+Route::get('/register', function () {
+
+    /*  http://localhost:8000/register?source=desktop
+    *   
+    *   Create a middleware to protect this route
+    */
+    session(['source' => request()->get('source')]);
+
+    return view('pages.desktop-app-login', ["pagetitle" => 'Register']);
+});
