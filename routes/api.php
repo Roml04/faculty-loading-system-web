@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Api\AppSnapshotContoller;
 use App\Http\Controllers\ScheduleController;
+use App\Models\Tokens;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/user', function (Request $request) {
@@ -39,4 +39,30 @@ Route::post('/publish', [ScheduleController::class, 'store'])->middleware('auth:
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/app-snapshot', [AppSnapshotContoller::class, 'index']);
     Route::post('/app-snapshot', [AppSnapshotContoller::class, 'store']);
+});
+
+Route::post('/token', function (Request $request) {
+
+    /*
+    *   Create a middleware that deletes expired tokens
+    */
+    $validated = $request->validate([
+        'email' => 'email'
+    ]);
+
+    $email = $validated['email'];
+
+    $user = User::where('email', $email)->first();
+
+    if($user) {
+        $token = Tokens::where('email', $email)->first();
+
+        return response()->json([
+            'token' => $token
+        ]);
+    } else {
+        return response()->json([
+            'message' => 'No tokens were found associated with that email.'
+        ]);
+    }
 });

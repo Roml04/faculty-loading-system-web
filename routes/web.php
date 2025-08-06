@@ -7,6 +7,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\CheckIfLoggedIn;
 use App\Http\Middleware\EnsureUserIsTeacher;
+use App\Models\Tokens;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -17,25 +18,34 @@ Route::get('/', function () {
 
 Route::middleware([CheckIfLoggedIn::class])->group(function() {
     Route::get('/board', [ProgramController::class, 'show'])->name('home');
-
-    Route::get('/teachers/schedule/{id}', [TeacherController::class, 'show'])->middleware(EnsureUserIsTeacher::class)->name('teacher.schedule');
-
+    
     Route::get('/search', [SearchController::class, 'search'])->name('search');
-
+    
     Route::get('/sections/{id}', [SectionController::class, 'indexSections'])->name('sections');
-
+    
     Route::get('/sections/schedule/{id}', [SectionController::class, 'viewSection'])->name('section.schedule');
-
+    
     Route::get('/sections/timeslots/{id}', [ClassTimeSlotController::class, 'sectionTimeSlots'])->name('get.schedule');
-
+    
     Route::get('/teachers/timeslots/{id}', [ClassTimeSlotController::class, 'teacherTimeSlots']);
+    
+    Route::get('/teachers/schedule/{id}', [TeacherController::class, 'show'])->middleware(EnsureUserIsTeacher::class)->name('teacher.schedule');
 });
 
 Route::get('/auth/redirect', function () {
+
+    /*
+    *   Move this to a controller
+    */
+
     return Socialite::driver('azure')->redirect();
 })->name('azure.redirect');
 
 Route::get('/auth/callback', function () {
+    
+    /*
+    *   Move this to a controller
+    */
 
     $user = Socialite::driver('azure')->user();
     
@@ -47,6 +57,7 @@ Route::get('/auth/callback', function () {
 
     if(session('source') === 'desktop') {
         
+        session()->forget('source');
         $userId = $user['id'];
         $email = $user['mail'];
         $firstName = $user['givenName'];
@@ -54,7 +65,7 @@ Route::get('/auth/callback', function () {
 
         $existingUser = User::where('email', $email)->first();
 
-        if(!$existingUser->wasRecentlyCreated) {
+        if($existingUser) {
             return view('pages.desktop.duplicate-account');
         }
 
@@ -69,14 +80,24 @@ Route::get('/auth/callback', function () {
 
         $token = $user->createToken(str_replace(' ', '_', strtolower($user->name)) . "_token");
 
-        dump(session());
+        $tokenPlainText = $token->plainTextToken;
 
-        return response()->json([
-            'id' => $userId,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
+        if (!$email) {
+            abort(500, 'Email was not returned from Microsoft login.');
+        }
+
+        Tokens::create([
+            'plain_text_token' => $tokenPlainText,
             'email' => $email,
-            'api_token' => $token->plainTextToken
+            'expires_at' => now()->addMinutes(1)
+        ]);
+
+        return redirect()->route('register.success', [
+            'userId' => $userId,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'email' => $email,
+            'apiToken' => $tokenPlainText
         ]);
         
     } else {
@@ -96,7 +117,6 @@ Route::get('/auth/callback', function () {
 
         return redirect('/board');
     }
-
     
 })->name('azure.callback');
 
@@ -106,7 +126,17 @@ Route::get('/register', function () {
     *   
     *   Create a middleware to protect this route
     */
+    if(request()->get('source') !== 'desktop') {
+        return view('errors.403-2');
+    }
+
     session(['source' => request()->get('source')]);
 
-    return view('pages.desktop-app-login', ["pagetitle" => 'Register']);
+    return view('pages.desktop.desktop-app-login', ["pagetitle" => 'Register']);
 });
+
+Route::get('/register/success', function () {
+
+    return view('pages.desktop.success-page');
+
+})->name('register.success');
