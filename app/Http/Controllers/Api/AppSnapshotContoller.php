@@ -20,7 +20,8 @@ class AppSnapshotContoller extends Controller
             return response()->json($snapshot);
         } catch (Exception $error) {
             return response()->json([
-                'message' => $error->getMessage()
+                'message' => $error->getMessage(),
+                'statusCode' => $error->getCode()
             ]);
         }
     }
@@ -42,7 +43,7 @@ class AppSnapshotContoller extends Controller
         } catch(Exception $error) {
             return response()->json([
                 'message' => $error->getMessage(),
-                'status code' => $error->getCode()
+                'statusCode' => $error->getCode()
             ]);
         }
     }
