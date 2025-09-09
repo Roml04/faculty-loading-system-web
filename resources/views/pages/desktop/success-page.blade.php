@@ -7,4 +7,18 @@
             <h1 class="py-8 text-txtclr_white">Registration successful. You may now close this tab.</h1>
         </div>
     </main>
+
+    <script defer>
+        console.log("fls-sti://callback" + "?userId={{ $userId }}" + "&firstName={{ urlencode($firstName) }}" + "&lastName={{ urlencode($lastName) }}" + "&email={{ urlencode($email) }}" + "&token={{ urlencode($apiToken) }}")
+
+        document.addEventListener("DOMContentLoaded", () => {
+        window.location.href =
+            "fls-sti://callback" +
+            "?userId={{ $userId }}" +
+            "&firstName={{ urlencode($firstName) }}" +
+            "&lastName={{ urlencode($lastName) }}" +
+            "&email={{ urlencode($email) }}" +
+            "&token={{ urlencode($apiToken) }}";
+        });
+    </script>
 </x-layout>

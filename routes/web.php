@@ -9,6 +9,7 @@ use App\Http\Middleware\CheckIfLoggedIn;
 use App\Http\Middleware\EnsureUserIsTeacher;
 use App\Models\Tokens;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -37,6 +38,7 @@ Route::get('/auth/redirect', function () {
     /*
     *   Move this to a controller
     */
+    dump('/auth/redirect');
 
     return Socialite::driver('azure')->redirect();
 })->name('azure.redirect');
@@ -47,6 +49,7 @@ Route::get('/auth/callback', function () {
     *   Move this to a controller
     */
 
+    dump('/auth/callback');
     $user = Socialite::driver('azure')->user();
     
     if(str_contains($user['mail'], 'calamba.sti.edu.ph')) {
@@ -135,8 +138,19 @@ Route::get('/register', function () {
     return view('pages.desktop.desktop-app-login', ["pagetitle" => 'Register']);
 });
 
-Route::get('/register/success', function () {
+Route::get('/register/success', function (Request $request) {
 
-    return view('pages.desktop.success-page');
+    $data = [
+        'userId' => $request['userId'],
+        'firstName' => $request['firstName'],
+        'lastName' => $request['lastName'],
+        'email' => $request['email'],
+        'apiToken' => $request['tokenPlainText']
+    ];
+
+    
+
+    // return redirect()->away("fls-sti://");
+    return view('pages.desktop.success-page', $data);
 
 })->name('register.success');
