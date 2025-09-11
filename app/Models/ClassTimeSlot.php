@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassTimeSlot extends Model
 {
+    protected $fillable = ['teachers_id', 'courses_id', 'rooms_id', 'start', 'end', 'day_of_week'];
+
     public function teachers() {
         return $this->belongsTo(Teacher::class);
     }

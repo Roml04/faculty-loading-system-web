@@ -14,13 +14,13 @@ class ProgramSeeder extends Seeder
     public function run(): void
     {
         $programs = [
-            ['Accountancy', 'ter'],
-            ['Computer Engineering', 'ter'],
-            ['Computer Science', 'ter'],
-            ['Business Administration', 'ter'],
-            ['Hospitality Management', 'ter'],
-            ['Information Technology', 'ter'],
-            ['Tourism Management', 'ter'],
+            ['Accountancy', 'tertiary'],
+            ['Computer Engineering', 'tertiary'],
+            ['Computer Science', 'tertiary'],
+            ['Business Administration', 'tertiary'],
+            ['Hospitality Management', 'tertiary'],
+            ['Information Technology', 'tertiary'],
+            ['Tourism Management', 'tertiary'],
             ['ABM', 'shs'],
             ['Culinary Arts', 'shs'],
             ['ITMAWD', 'shs'],

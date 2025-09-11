@@ -21,10 +21,14 @@
         transform: scale(1.025);
     }
 </style>
+{{-- 
+@php
+    $current_url = url()->current();
+@endphp --}}
 
 <div style="background: url({{ asset($path) }}); background-size: cover; background-position: center;" class="program-card flex flex-col justify-end gap-2 p-3 border border-cstm_bluishgray rounded-md">
     <h2>{{ $programname }}</h2>
-    <a href="{{ route('sections', ['id' => $id]) }}" class="cstm-button flex justify-center p-[1em] rounded-md bg-primary text-white">
+    <a href="{{ route('sections', ['id' => $id, 'return_to' => url()->current()]) }}" class="cstm-button flex justify-center p-[1em] rounded-md bg-primary text-white">
         <p>Browse Schedule</p>
     </a>
 </div>

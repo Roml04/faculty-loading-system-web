@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    use HasFactory;
+
+    protected $fillable = ['teacher_name'];
 
     public function tertiarysectionclass() {
-        return $this->hasMany(ClassTimeSlot::class);
+        return $this->hasMany(ClassTimeSlot::class, 'teachers_id', 'id');
     }
 }

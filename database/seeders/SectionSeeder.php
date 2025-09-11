@@ -21,13 +21,17 @@ class SectionSeeder extends Seeder
                 $sections[] = 100 * $i + $j;
             }
         }
-
         
         for($i = 0; $i < 20; $i++) {
+
+            $year = fake()->randomElement([1, 2, 3, 4, 11, 12]);
+            $level = in_array($year, [1, 2, 3, 4]) ? 'tertiary': 'shs';
+
             Section::create([
                 'section_name' => 'ABC' . array_shift($sections),
-                'year' => fake()->randomElement(['first_year', 'second_year', 'third_year', 'fourth_year']),
-                'term' => fake()->randomElement(['first_term', 'second_term']),
+                'year' => $year,
+                'term' => fake()->randomElement([1, 2]),
+                'level' => $level,
                 'programs_id' => Program::inRandomOrder()->first()->id
             ]);
         }
