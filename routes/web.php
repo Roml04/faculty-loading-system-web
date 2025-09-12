@@ -17,19 +17,19 @@ Route::get('/', function () {
     return view('pages.sign-in', ['pagetitle' => 'Sign In']);
 })->name('login');
 
-Route::middleware([CheckIfLoggedIn::class])->group(function() {
+Route::middleware([CheckIfLoggedIn::class])->group(function () {
     Route::get('/board', [ProgramController::class, 'show'])->name('home');
-    
+
     Route::get('/search', [SearchController::class, 'search'])->name('search');
-    
+
     Route::get('/sections/{id}', [SectionController::class, 'indexSections'])->name('sections');
-    
+
     Route::get('/sections/schedule/{id}', [SectionController::class, 'viewSection'])->name('section.schedule');
-    
+
     Route::get('/sections/timeslots/{id}', [ClassTimeSlotController::class, 'sectionTimeSlots'])->name('get.schedule');
-    
+
     Route::get('/teachers/timeslots/{id}', [ClassTimeSlotController::class, 'teacherTimeSlots']);
-    
+
     Route::get('/teachers/schedule/{id}', [TeacherController::class, 'show'])->middleware(EnsureUserIsTeacher::class)->name('teacher.schedule');
 });
 
@@ -44,37 +44,43 @@ Route::get('/auth/redirect', function () {
 })->name('azure.redirect');
 
 Route::get('/auth/callback', function () {
-    
+
     /*
     *   Move this to a controller
     */
 
     dump('/auth/callback');
     $user = Socialite::driver('azure')->user();
-    
-    if(str_contains($user['mail'], 'calamba.sti.edu.ph')) {
+
+    /*
+    * Change the mail upon deployment vvv
+    */
+
+    if (str_contains($user['userPrincipalName'], 'retescharlesrenangmail.onmicrosoft.com') or str_contains($user['userPrincipalName'], 'calamba.sti.edu.ph')) {
         session(['isSameBranch' => true]);
     } else {
         return view('errors.403-2');
     }
 
-    if(session('source') === 'desktop') {
-        
+    dump($user['userPrincipalName']);
+
+    if (session('source') === 'desktop') {
+
         session()->forget('source');
         $userId = $user['id'];
-        $email = $user['mail'];
+        $email = $user['userPrincipalName'];
         $firstName = $user['givenName'];
         $lastName = $user['surname'];
 
         $existingUser = User::where('email', $email)->first();
 
-        if($existingUser) {
+        if ($existingUser) {
             return view('pages.desktop.duplicate-account');
         }
 
         $user = User::updateOrCreate([
             'email' => $email
-        ],[
+        ], [
             'id' => $userId,
             'name' => $firstName . ' ' . $lastName,
             'email' => $email,
@@ -95,6 +101,8 @@ Route::get('/auth/callback', function () {
             'expires_at' => now()->addMinutes(1)
         ]);
 
+        dump($tokenPlainText);
+
         return redirect()->route('register.success', [
             'userId' => $userId,
             'firstName' => $firstName,
@@ -102,12 +110,11 @@ Route::get('/auth/callback', function () {
             'email' => $email,
             'apiToken' => $tokenPlainText
         ]);
-        
     } else {
 
         $displayName = $user['displayName'];
 
-        if(str_contains($displayName, '(Student)')) {
+        if (str_contains($displayName, '(Student)')) {
             $role = 'Student';
         } elseif (str_contains($displayName, '(Faculty)')) {
             $role = 'Teacher';
@@ -120,7 +127,6 @@ Route::get('/auth/callback', function () {
 
         return redirect('/board');
     }
-    
 })->name('azure.callback');
 
 Route::get('/register', function () {
@@ -129,7 +135,8 @@ Route::get('/register', function () {
     *   
     *   Create a middleware to protect this route
     */
-    if(request()->get('source') !== 'desktop') {
+    if (request()->get('source') !== 'desktop') {
+        dump("check if source is desktop");
         return view('errors.403-2');
     }
 
@@ -145,12 +152,8 @@ Route::get('/register/success', function (Request $request) {
         'firstName' => $request['firstName'],
         'lastName' => $request['lastName'],
         'email' => $request['email'],
-        'apiToken' => $request['tokenPlainText']
+        'apiToken' => $request['apiToken']
     ];
 
-    
-
-    // return redirect()->away("fls-sti://");
     return view('pages.desktop.success-page', $data);
-
 })->name('register.success');
