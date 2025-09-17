@@ -7,13 +7,14 @@ use App\Models\AppSnapshot;
 use Exception;
 use Illuminate\Http\Request;
 
-class AppSnapshotContoller extends Controller
+class AppSnapshotController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         try {
             $snapshot = AppSnapshot::latest()->get();
 
-            if(!$snapshot) {
+            if (!$snapshot) {
                 return response()->json(['message' => 'No records found.'], 404);
             }
 
@@ -26,7 +27,8 @@ class AppSnapshotContoller extends Controller
         }
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $validated = $request->validate([
                 'snapshot' => 'required|array'
@@ -39,8 +41,7 @@ class AppSnapshotContoller extends Controller
             return response()->json([
                 'message' => 'Snapshot successfully recorded',
             ]);
-
-        } catch(Exception $error) {
+        } catch (Exception $error) {
             return response()->json([
                 'message' => $error->getMessage(),
                 'statusCode' => $error->getCode()

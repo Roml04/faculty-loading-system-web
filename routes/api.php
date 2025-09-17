@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AppSnapshotContoller;
+use App\Http\Controllers\Api\AppSnapshotController;
 use App\Http\Controllers\ScheduleController;
 use App\Models\Tokens;
 use App\Models\User;
@@ -16,7 +16,7 @@ Route::post('/user', function (Request $request) {
             "email" => "email",
             "password" => "string"
         ]);
-        
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -26,19 +26,16 @@ Route::post('/user', function (Request $request) {
         $token = $user->createToken(str_replace(' ', '_', strtolower($user->name)) . "_token");
 
         return response()->json(["message" => $token->plainTextToken]);
-    } 
-
-    catch(Exception $error) {
+    } catch (Exception $error) {
         return ["message" => $error->getMessage()];
     }
-
 });
 
 Route::post('/publish', [ScheduleController::class, 'store'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/app-snapshot', [AppSnapshotContoller::class, 'index']);
-    Route::post('/app-snapshot', [AppSnapshotContoller::class, 'store']);
+    Route::get('/app-snapshot', [AppSnapshotController::class, 'index']);
+    Route::post('/app-snapshot', [AppSnapshotController::class, 'store']);
 });
 
 Route::post('/token', function (Request $request) {
@@ -54,7 +51,7 @@ Route::post('/token', function (Request $request) {
 
     $user = User::where('email', $email)->first();
 
-    if($user) {
+    if ($user) {
         $token = Tokens::where('email', $email)->first();
 
         return response()->json([
