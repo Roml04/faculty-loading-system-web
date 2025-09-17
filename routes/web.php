@@ -38,7 +38,6 @@ Route::get('/auth/redirect', function () {
     /*
     *   Move this to a controller
     */
-    dump('/auth/redirect');
 
     return Socialite::driver('azure')->redirect();
 })->name('azure.redirect');
@@ -49,7 +48,6 @@ Route::get('/auth/callback', function () {
     *   Move this to a controller
     */
 
-    dump('/auth/callback');
     $user = Socialite::driver('azure')->user();
 
     /*
@@ -61,8 +59,6 @@ Route::get('/auth/callback', function () {
     } else {
         return view('errors.403-2');
     }
-
-    dump($user['userPrincipalName']);
 
     if (session('source') === 'desktop') {
 
@@ -101,8 +97,6 @@ Route::get('/auth/callback', function () {
             'expires_at' => now()->addMinutes(1)
         ]);
 
-        dump($tokenPlainText);
-
         return redirect()->route('register.success', [
             'userId' => $userId,
             'firstName' => $firstName,
@@ -136,7 +130,6 @@ Route::get('/register', function () {
     *   Create a middleware to protect this route
     */
     if (request()->get('source') !== 'desktop') {
-        dump("check if source is desktop");
         return view('errors.403-2');
     }
 
