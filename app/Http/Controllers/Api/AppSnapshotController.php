@@ -31,11 +31,13 @@ class AppSnapshotController extends Controller
     {
         try {
             $validated = $request->validate([
+                'deviceId' => 'required',
                 'snapshot' => 'required|array'
             ]);
 
             AppSnapshot::create([
-                'snapshot' => $validated['snapshot']
+                'snapshot' => $validated['snapshot'],
+                'device_id' => $validated['deviceId']
             ]);
 
             return response()->json([

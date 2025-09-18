@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('app_snapshots', function (Blueprint $table) {
             $table->id();
             $table->json('snapshot');
+            $table->string('device_id');
             $table->timestamps();
         });
     }
