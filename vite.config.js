@@ -32,6 +32,9 @@ export default defineConfig({
         port: 5173,
         cors: {
             origin: '*'
+        },
+        watch: {
+            ignored: ['**/vendor/**']
         }
     }
 });
