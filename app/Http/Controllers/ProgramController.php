@@ -27,9 +27,9 @@ class ProgramController extends Controller
         $courses = [];
         $strands = [];
 
-        foreach($programs as $program) {
+        foreach ($programs as $program) {
 
-            if(!(file_exists(public_path($program->path)))) {
+            if (!(file_exists(public_path($program->path)))) {
                 $program->path = 'assets/images/no-img.jpg';
             }
 
@@ -45,7 +45,7 @@ class ProgramController extends Controller
             }
         }
 
-        if(session('role') === 'Student') {
+        if (session('role') === 'Student') {
             return view('pages.program-selection', ['title' => 'Programs', 'role' => session('role'), 'courses' => $courses, 'strands' => $strands, 'teachers' => []]);
         }
 

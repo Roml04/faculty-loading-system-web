@@ -125,7 +125,7 @@ Route::get('/auth/callback', function () {
 
 Route::get('/register', function () {
 
-    /*  http://localhost:8000/register?source=desktop
+    /*  http://localhost:8000/register?source=<desktop></desktop>
     *   
     *   Create a middleware to protect this route
     */
