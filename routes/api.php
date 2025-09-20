@@ -31,9 +31,8 @@ Route::post('/user', function (Request $request) {
     }
 });
 
-Route::post('/publish', [ScheduleController::class, 'store'])->middleware('auth:sanctum');
-
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/publish', [ScheduleController::class, 'store']);
     Route::get('/app-snapshot', [AppSnapshotController::class, 'index']);
     Route::post('/app-snapshot', [AppSnapshotController::class, 'store']);
 });
@@ -41,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/token', function (Request $request) {
 
     /*
-    *   Create a middleware that deletes expired tokens
+    *   NOTES: Create(?) a middleware that deletes expired tokens
     */
     $validated = $request->validate([
         'email' => 'email'

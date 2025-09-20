@@ -192,7 +192,7 @@ class ScheduleController extends Controller
         
         catch(Exception $error) {
     
-            return ['message' => $error->getMessage(), 'request' => $request];
+            return ['message' => $error->getMessage()];
         
         }
     }
