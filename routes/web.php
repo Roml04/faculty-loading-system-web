@@ -53,10 +53,10 @@ Route::get('/auth/callback', function () {
     * NOTES: Change the mail upon deployment vvv
     */
 
-    if (str_contains($user['userPrincipalName'], 'retescharlesrenangmail.onmicrosoft.com') or str_contains($user['userPrincipalName'], 'calamba.sti.edu.ph')) {
+    if (str_contains($user['userPrincipalName'], 'retescharlesrenangmail.onmicrosoft.com') or str_contains($user['userPrincipalName'], 'calambas.sti.edu.ph')) {
         session(['isSameBranch' => true]);
     } else {
-        return view('errors.403-2');
+        abort(403);
     }
 
     /*
@@ -180,7 +180,7 @@ Route::get('/signin', function () {
     *   Create a middleware to protect this route
     */
     if (request()->get('source') !== 'desktop') {
-        return view('errors.403-2');
+        abort(403);
     }
 
     session(['source' => request()->get('source'), 'action' => 'signin']);
@@ -195,7 +195,7 @@ Route::get('/register', function () {
     *   Create a middleware to protect this route
     */
     if (request()->get('source') !== 'desktop') {
-        return view('errors.403-2');
+        abort(403);
     }
 
     session(['source' => request()->get('source'), 'action' => 'register']);
