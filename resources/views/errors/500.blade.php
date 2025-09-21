@@ -1,7 +1,7 @@
 @php
     $pagetitle = "Internal Server Error";
     $errortitle = "500 - Internal Server Error";
-    $errormessage = "Something went wrong on our end. Please try again later.";
+    $errormessage = "The server encountered an internal error. Please refresh the page or return later once the issue has been resolved.";
 @endphp
 
 <x-layout :pagetitle="$pagetitle">

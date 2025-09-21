@@ -2,9 +2,14 @@
     $pagetitle = 'Registration Successful';
 @endphp
 <x-layout :pagetitle="$pagetitle">
-    <main class="flex justify-center items-center">
-        <div class="w-full flex flex-col items-center bg-state_success_d">
-            <h1 class="py-8 text-txtclr_white">Registration successful. You may now close this tab.</h1>
+    <main class="flex flex-col justify-center items-center h-full bg-bgcolor_lightgray">
+        <div class="flex flex-col bg-bgcolor_white rounded-md w-1/2 overflow-clip">
+            <div class="flex flex-col bg-state_success_d px-8">
+                <h1 class="py-8 text-txtclr_white">Registration Complete</h1>
+            </div>
+            <div class="flex flex-col justify-center p-8 gap-8">
+                <p>Registration was successful and your details have been saved. Please close this tab and continue by signing in.</p>
+            </div>
         </div>
     </main>
 
