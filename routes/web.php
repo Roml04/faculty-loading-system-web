@@ -87,7 +87,7 @@ Route::get('/auth/callback', function () {
             }
 
             return view('pages.desktop.success-page', [
-                'message' => "Sign in successful. You may now close this tab.",
+                'action' => "Sign in",
                 'apiToken' => $token['plain_text_token']
             ]);
 
@@ -144,7 +144,7 @@ Route::get('/auth/callback', function () {
             ]);
 
             return view('pages.desktop.success-page', [
-                'message' => "Registration successful. You may now close this tab.",
+                'action' => "Registration",
                 'apiToken' => $tokenPlainText
             ]);
 
