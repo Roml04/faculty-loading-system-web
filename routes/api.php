@@ -6,6 +6,7 @@ use App\Models\Tokens;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 Route::post('/user', function (Request $request) {
 
@@ -23,11 +24,40 @@ Route::post('/user', function (Request $request) {
             'password' => $validated['password'],
         ]);
 
+        
         $token = $user->createToken(str_replace(' ', '_', strtolower($user->name)) . "_token");
 
-        return response()->json(["message" => $token->plainTextToken]);
+        $tokenPlainText = $token->plainTextToken;
+
+        Tokens::create([
+            'plain_text_token' => $tokenPlainText,
+            'email' => $user['email'],
+            'expires_at' => now()->addMinutes(1)
+        ]);
+
+        return response()->json(["message" => 'User successfully registered', "token" => $tokenPlainText]);
+        
     } catch (Exception $error) {
-        return ["message" => $error->getMessage()];
+        return response()->json(["message" => $error->getMessage()], 500);
+    }
+});
+
+Route::post('/email', function (Request $request) {
+    try {
+
+        $validated = $request->validate([
+            'email' => $request['email']
+        ]);
+
+        $existingUser = User::where('email', $validated['email'])->first();
+
+        if ($existingUser) {
+            return response()->json([
+                'message' => 'This email address is already in use. Please try logging in or use a different one.'
+            ]);
+        }
+    } catch(Exception $error) {
+        
     }
 });
 
@@ -42,23 +72,27 @@ Route::post('/token', function (Request $request) {
     /*
     *   NOTES: Create(?) a middleware that deletes expired tokens
     */
-    $validated = $request->validate([
-        'email' => 'email'
-    ]);
 
-    $email = $validated['email'];
+    try {
 
-    $user = User::where('email', $email)->first();
+        $validated = $request->validate([
+            'email' => 'email'
+        ]);
 
-    if ($user) {
+        $email = $validated['email'];
         $token = Tokens::where('email', $email)->first();
 
+        if(!$token) {
+            return response()->json([
+                'message' => 'No tokens were found associated with this email address.'
+            ]);
+        }
+
+        return redirect()->away('fls-sti://callback?token='.$token);
+
+    } catch (Exception $error) {
         return response()->json([
-            'token' => $token
-        ]);
-    } else {
-        return response()->json([
-            'message' => 'No tokens were found associated with that email.'
+            'message' => $error->getMessage()
         ]);
     }
 });

@@ -4,21 +4,16 @@
 <x-layout :pagetitle="$pagetitle">
     <main class="flex justify-center items-center">
         <div class="w-full flex flex-col items-center bg-state_success_d">
-            <h1 class="py-8 text-txtclr_white">Registration successful. You may now close this tab.</h1>
+            <h1 class="py-8 text-txtclr_white">{{ $message }}</h1>
         </div>
     </main>
 
     <script defer>
-        console.log("fls-sti://callback" + "?userId={{ $userId }}" + "&firstName={{ urlencode($firstName) }}" + "&lastName={{ urlencode($lastName) }}" + "&email={{ urlencode($email) }}" + "&token={{ urlencode($apiToken) }}")
+        console.log("fls-sti://callback?token={{ urlencode($apiToken) }}")
 
         document.addEventListener("DOMContentLoaded", () => {
-        window.location.href =
-            "fls-sti://callback" +
-            "?userId={{ $userId }}" +
-            "&firstName={{ urlencode($firstName) }}" +
-            "&lastName={{ urlencode($lastName) }}" +
-            "&email={{ urlencode($email) }}" +
-            "&token={{ urlencode($apiToken) }}";
+            window.location.href =
+                "fls-sti://callback?token={{ urlencode($apiToken) }}";
         });
     </script>
 </x-layout>

@@ -22,7 +22,6 @@ class AppSnapshotController extends Controller
         } catch (Exception $error) {
             return response()->json([
                 'message' => $error->getMessage(),
-                'statusCode' => $error->getCode()
             ]);
         }
     }
