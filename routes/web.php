@@ -53,7 +53,7 @@ Route::get('/auth/callback', function () {
     * NOTES: Change the mail upon deployment vvv
     */
 
-    if (str_contains($user['userPrincipalName'], 'retescharlesrenangmail.onmicrosoft.com') or str_contains($user['userPrincipalName'], 'calambas.sti.edu.ph')) {
+    if (str_contains($user['userPrincipalName'], 'retescharlesrenangmail.onmicrosoft.com') or str_contains($user['userPrincipalName'], 'calamba.sti.edu.ph')) {
         session(['isSameBranch' => true]);
     } else {
         abort(403);
