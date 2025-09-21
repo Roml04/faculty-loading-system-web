@@ -186,7 +186,7 @@ Route::get('/signin', function () {
     session(['source' => request()->get('source'), 'action' => 'signin']);
 
     return view('pages.desktop.desktop-app-login', ["pagetitle" => 'Register']);
-});
+})->name('register');
 
 Route::get('/register', function () {
 
