@@ -117,7 +117,21 @@ Route::get('/auth/callback', function () {
             * Checks if the user's email exists in the web's database
             */
             if ($existingUser) {
-                return view('pages.desktop.duplicate-account');
+
+                $token = Tokens::where('email', $existingUser['email'])->first();
+
+                if($token === null) {
+                    return response()->json([
+                        'message' => 'No tokens were found associated with this email address.',
+                    ], 404);
+                }
+
+                return view('pages.desktop.success-page', [
+                    'action' => "Sign in",
+                    'apiToken' => $token['plain_text_token']
+                ]);
+
+                // return view('pages.desktop.duplicate-account');
             }
 
             $user = User::updateOrCreate([
