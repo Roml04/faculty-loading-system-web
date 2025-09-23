@@ -131,16 +131,15 @@ Route::get('/auth/callback', function () {
                     'apiToken' => $token['plain_text_token']
                 ]);
 
-                // return view('pages.desktop.duplicate-account');
             }
 
             $user = User::updateOrCreate([
                 'email' => $email
             ], [
-                'id' => $userId,
+                'id' => $userId, // NOTES: Create a new column for microsoft ID
                 'name' => $firstName . ' ' . $lastName,
                 'email' => $email,
-                'password' => 'remove_password'
+                'password' => 'remove_password' // NOTES: Don't store passwords. Remove the password column on the table and model
             ]);
 
             $token = $user->createToken(str_replace(' ', '_', strtolower($user->name)) . "_token");
@@ -151,10 +150,15 @@ Route::get('/auth/callback', function () {
                 abort(500, 'Email was not returned from Microsoft login.');
             }
 
+            /* 
+            * NOTES: This feels useless since there is no middleware removing expired tokens.
+            * I'm also not sure if removing tokens, in general, would break anything.
+            */
+            
             Tokens::create([
                 'plain_text_token' => $tokenPlainText,
                 'email' => $email,
-                'expires_at' => now()->addMinutes(1) // This feels useless.
+                'expires_at' => now()->addMinutes(1)  
             ]);
 
             return view('pages.desktop.success-page', [
