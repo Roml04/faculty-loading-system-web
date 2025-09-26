@@ -180,7 +180,7 @@ Route::get('/auth/callback', function () {
 
     if (str_contains($displayName, '(Student)')) {
         $role = 'Student';
-    } elseif (str_contains($displayName, '(Faculty)')) {
+    } elseif (str_contains($displayName, '(Faculty)') or str_contains($user['userPrincipalName'], 'facultyloadingsystemgmail.onmicrosoft.com')) {
         $role = 'Teacher';
     } else {
         $role = 'Unknown';
