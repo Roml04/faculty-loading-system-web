@@ -16,11 +16,11 @@ class CheckIfLoggedIn
     public function handle(Request $request, Closure $next): Response
     {
         if(!(session('isSameBranch'))) {
-            return redirect('/');
+            abort(403);
         }
 
         if(!(session('role') === 'Teacher' or session('role') === 'Student')) {
-            return redirect('/');
+            abort(403);
         }
 
         return $next($request);

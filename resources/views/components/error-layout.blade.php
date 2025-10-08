@@ -8,8 +8,15 @@
         <div class="flex flex-col justify-center p-8 gap-8">
             <p>{{ $errormessage }}</p>
         </div>
-        <div class="flex justify-center p-8">
-            <a href="{{ url('/board') }}" class="text-txtclr_black hover:underline hover:text-txtclr_primary rounded-md">Go back to the homepage</a>
-        </div>
+
+        @if((session('role') === 'Student') or (session('role') === 'Teacher'))
+            <div class="flex justify-center p-8">
+                <a href="{{ url('/board') }}" class="text-txtclr_black hover:underline hover:text-txtclr_primary rounded-md">Go back to the homepage</a>
+            </div>
+        @else
+            <div class="flex justify-center p-8">
+                <a href="{{ url('/') }}" class="text-txtclr_black hover:underline hover:text-txtclr_primary rounded-md">Go back</a>
+            </div>
+        @endif        
     </div>
 </main>
