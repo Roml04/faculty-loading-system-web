@@ -69,10 +69,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/token', function (Request $request) {
 
-    /*
-    *   NOTES: Create(?) a middleware that deletes expired tokens
-    */
-
     try {
 
         $validated = $request->validate([

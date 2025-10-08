@@ -7,10 +7,11 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\CheckIfLoggedIn;
 use App\Http\Middleware\EnsureUserIsTeacher;
-use App\Models\Tokens;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
+use App\Models\Tokens;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('pages.sign-in', ['pagetitle' => 'Sign In']);
@@ -49,13 +50,10 @@ Route::get('/auth/callback', function () {
 
     $user = Socialite::driver('azure')->user();
 
-    /*
-    * NOTES: Change the mail upon deployment vvv
-    */
+    $whitelistedDomains = config('domains.whitelisted_domains');
+    $userDomain = Str::after($user['userPrincipalName'], '@');
 
-    if (str_contains($user['userPrincipalName'], 'calamba.sti.edu.ph') or
-        str_contains($user['userPrincipalName'], 'facultyloadingsystemgmail.onmicrosoft.com')
-        ) {
+    if (in_array($userDomain, $whitelistedDomains)) {
         session(['isSameBranch' => true]);
     } else {
         abort(403);
@@ -149,7 +147,7 @@ Route::get('/auth/callback', function () {
             $tokenPlainText = $token->plainTextToken;
 
             if (!$email) {
-                abort(500, 'Email was not returned from Microsoft login.');
+                abort(500);
             }
 
             /* 
@@ -180,7 +178,7 @@ Route::get('/auth/callback', function () {
 
     if (str_contains($displayName, '(Student)')) {
         $role = 'Student';
-    } elseif (str_contains($displayName, '(Faculty)') or str_contains($user['userPrincipalName'], 'facultyloadingsystemgmail.onmicrosoft.com')) {
+    } elseif (str_contains($displayName, '(Faculty)') or in_array($userDomain, config('domains.admin_domains'))) {
         $role = 'Teacher';
     } else {
         $role = 'Unknown';
@@ -195,7 +193,7 @@ Route::get('/auth/callback', function () {
 
 Route::get('/signin', function () {
 
-    /*  http://localhost:8000/register?source=desktop&action=signin
+    /*  /register?source=desktop&action=signin
     *   
     *   Create a middleware to protect this route
     */
@@ -210,7 +208,7 @@ Route::get('/signin', function () {
 
 Route::get('/register', function () {
 
-    /*  http://localhost:8000/register?source=desktop&action=register
+    /*  /register?source=desktop&action=register
     *   
     *   Create a middleware to protect this route
     */
