@@ -25,6 +25,10 @@
     z-index: 1;
 }
 
+.icons-def {
+    @apply w-7 aspect-square
+}
+
 .icons {
     @apply w-4 aspect-square
 }
