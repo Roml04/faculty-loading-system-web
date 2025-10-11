@@ -35,7 +35,7 @@ class ScheduleController extends Controller
             'teachers.*.teacherId' => 'numeric',
             'teachers.*.firstName' => 'string',
             'teachers.*.lastName' => 'string',
-            'teachers.*.middleInitial' => 'string',
+            'teachers.*.middleInitial' => ['string', 'nullable'],
             'courses' => 'array',
             'courses.*.courseId' => 'numeric',
             'courses.*.courseName' => 'string',

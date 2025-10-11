@@ -34,7 +34,7 @@ navBarItems.forEach(item => {
                             <input class="hidden" id="${item.title}" name='navigation' value='${item.title}' type="radio" ${isChecked}>
                             <p class="text-txtclr_white">${item.title.charAt(0).toUpperCase() + item.title.slice(1)}</p>`;
                         
-    navItem.classList.add('flex', 'items-center', 'hover:bg-primary_hovered', 'active:bg-primary_pressed', 'rounded-full', 'justify-center', 'px-12', 'py-4', 'gap-4', 'has-[input:checked]:bg-primary_pressed');
+    navItem.classList.add('flex', 'items-center', 'active:bg-bgcolor-gray', 'rounded-full', 'justify-center', 'px-12', 'py-4', 'gap-4', 'has-[input:checked]:bg-primary_pressed');
 
     webNavBarCont.appendChild(navItem);
 
