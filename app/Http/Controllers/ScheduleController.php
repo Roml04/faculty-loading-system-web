@@ -14,17 +14,8 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'programs' => 'array',
             'programs.*.programId' => 'numeric',
@@ -55,14 +46,15 @@ class ScheduleController extends Controller
             'classtimeslots.*.teacherId' => 'numeric',
             'classtimeslots.*.courseId' => 'numeric',
             'classtimeslots.*.roomId' => 'numeric',
-            // 'classtimeslots.roomType' => 'string',
             'classtimeslots.*.day' => ['numeric', 'between:1,6'],
             'classtimeslots.*.startTime' => ['date_format:H:i', 'after:05:59', 'before:19:01'],
             'classtimeslots.*.endTime' => ['date_format:H:i', 'after:06:00', 'before:19:01'],
             'sectiontimeslots' => 'array',
-            // 'sectiontimeslots.*.id' => 'numeric',
             'sectiontimeslots.*.sectionId' => 'numeric',
             'sectiontimeslots.*.classTimeId' => 'numeric',
+            'semester' => 'array',
+            'semester.term' => ['required', 'numeric'],
+            'semester.termName' => ['required', 'string']
         ]);
 
         try {
@@ -136,20 +128,25 @@ class ScheduleController extends Controller
             }
             
             $sections = $validated['sections'];
+            $semester = $validated['semester'];
             
             foreach($sections as $section) {
-                
-                Section::upsert([
-                        'id' => $section['sectionId'],
-                        'section_name' => $section['sectionName'],
-                        'year' => $section['year'],
-                        'term' => $section['term'],
-                        'level' => $section['level'],
-                        'programs_id' => $section['programId']
-                    ],
-                    uniqueBy: ['id'],
-                    update: ['section_name', 'year', 'term', 'programs_id']
-                );    
+
+                if($section['term'] === $semester['term']) {
+                    Section::upsert([
+                            'id' => $section['sectionId'],
+                            'section_name' => $section['sectionName'],
+                            'year' => $section['year'],
+                            'term' => $section['term'],
+                            'level' => $section['level'],
+                            'programs_id' => $section['programId']
+                        ],
+                        uniqueBy: ['id'],
+                        update: ['section_name', 'year', 'term', 'programs_id']
+                    );
+                    
+                }
+    
             }
     
             $classtimeslots = $validated['classtimeslots'];
