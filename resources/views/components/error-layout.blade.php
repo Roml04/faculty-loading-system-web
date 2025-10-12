@@ -1,7 +1,7 @@
 @props(['errortitle' => 'Untitled', 'errormessage' => '...'])
 
 <main class="flex flex-col justify-center items-center h-full bg-bgcolor_lightgray">
-    <div class="flex flex-col bg-bgcolor_white rounded-md w-1/2 overflow-clip">
+    <div class="flex flex-col bg-bgcolor_white rounded-md w-11/12 md:w-1/2 overflow-clip">
         <div class="flex flex-col bg-state_danger_d px-8">
             <h1 class="py-8 text-txtclr_white">{{ $errortitle }}</h1>
         </div>
