@@ -35,11 +35,11 @@ Route::middleware([CheckIfLoggedIn::class])->group(function () {
 
 Route::get('/auth/redirect', function () {
 
-    /*
-    *   NOTES: Move this to a controller
-    */
+    /** @var \Laravel\Socialite\Two\AbstractProvider $driver */
 
-    return Socialite::driver('azure')->redirect();
+    $driver = Socialite::driver('azure');
+    return $driver->with(['prompt' => 'select_account'])->redirect();
+    
 })->name('azure.redirect');
 
 Route::get('/auth/callback', function () {
