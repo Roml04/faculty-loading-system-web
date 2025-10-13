@@ -52,9 +52,9 @@ class ScheduleController extends Controller
             'sectiontimeslots' => 'array',
             'sectiontimeslots.*.sectionId' => 'numeric',
             'sectiontimeslots.*.classTimeId' => 'numeric',
-            'semester' => 'array',
-            'semester.term' => ['required', 'numeric'],
-            'semester.termName' => ['required', 'string']
+            // 'semester' => 'array',
+            // 'semester.term' => ['required', 'numeric'],
+            // 'semester.termName' => ['required', 'string']
         ]);
 
         try {
@@ -128,11 +128,11 @@ class ScheduleController extends Controller
             }
             
             $sections = $validated['sections'];
-            $semester = $validated['semester'];
+            // $semester = $validated['semester'];
             
             foreach($sections as $section) {
 
-                if($section['term'] === $semester['term']) {
+                // if($section['term'] === $semester['term']) {
                     Section::upsert([
                             'id' => $section['sectionId'],
                             'section_name' => $section['sectionName'],
@@ -145,7 +145,7 @@ class ScheduleController extends Controller
                         update: ['section_name', 'year', 'term', 'programs_id']
                     );
                     
-                }
+                // }
     
             }
     
