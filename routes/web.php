@@ -7,11 +7,14 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\CheckIfLoggedIn;
 use App\Http\Middleware\EnsureUserIsTeacher;
+use App\Models\ClassTimeSlot;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
 use App\Models\Tokens;
 use App\Models\User;
+
+Route::get('/timetable/{id}', [ClassTimeSlotController::class, 'exportTimeSlots'])->name('export');
 
 Route::get('/', function () {
     return view('pages.sign-in', ['pagetitle' => 'Sign In']);

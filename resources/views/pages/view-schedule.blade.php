@@ -42,6 +42,8 @@
                 </svg>
             </a>
             <h1>{{ $pagetitle }}</h1>
+
+            <a href="{{ route('export', ['id' => $id]) }}">Download</a>
         </div>
         <div id="calendar" class="h-full lg:pr-0"></div>
         
