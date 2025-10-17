@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Section;
 use App\Models\Teacher;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Spatie\Browsershot\Browsershot;
+
+use function Spatie\LaravelPdf\Support\pdf;
 
 class ClassTimeSlotController extends Controller
 {
@@ -61,7 +65,7 @@ class ClassTimeSlotController extends Controller
         return response()->json($events);
     }
 
-    public function exportTimeSlots($id) {
+    public function exportTimeSlotsSlots($id, Request $request) {
 
         $section = Section::whereId($id)->first();
         
@@ -97,7 +101,6 @@ class ClassTimeSlotController extends Controller
             6 => []
         ];
         
-
         foreach ($formattedSchedules as $key => $array) {
             
             foreach ($schedules as $schedule) {
@@ -130,6 +133,31 @@ class ClassTimeSlotController extends Controller
 
         $formattedSchedules = array_combine(array_keys($days), array_values($formattedSchedules));
 
-        return view('components.timetable-layout', ['id' => $id, 'days' => $formattedSchedules, 'rowCount' => max(array_values($days))]);
+        $pagetitle = $request['pagetitle'];
+        
+        // return view('components.timetable-layout', ['formattedSchedules' => $formattedSchedules, 'pagetitle' => $request['pagetitle']]);
+
+        if($request['format'] === 'pdf') {
+            return pdf()
+                ->view('components.timetable-layout', ['formattedSchedules' => $formattedSchedules, 'pagetitle' => $pagetitle])
+                ->name("$pagetitle/SCHEDULE.pdf")
+                ->landscape()
+                ->download();
+        }
+
+        if($request['format'] === 'jpg') {
+            $html = view('components.timetable-layout', ['formattedSchedules' => $formattedSchedules, 'pagetitle' => $pagetitle])->render();
+
+            $jpgBinary = Browsershot::html($html)
+                ->showBackground()
+                ->fullPage()
+                ->deviceScaleFactor(2)
+                ->setScreenshotType('jpeg', 90)
+                ->screenshot();               
+
+            return response($jpgBinary)
+                ->header('Content-Type', 'image/jpeg')
+                ->header('Content-Disposition', "attachment; filename=\"$pagetitle\_SCHEDULE.jpg\"");
+        }
     }
 }

@@ -1,5 +1,4 @@
 @vite(['resources/css/calendar.css'])
-
 <x-layout :pagetitle="$pagetitle">
 
     <dialog id="eventPopup" class="cstm-fc-event-popup outline-none">
@@ -35,15 +34,31 @@
     </dialog>
 
     <main id="main-element" class="w-full flex flex-col h-full gap-3 lg:px-5 lg:pt-8">
-        <div class="flex items-center gap-4 p-5 pt-8 lg:p-0">
-            <a href="{{ url()->previous() }}">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.44067 14.9406C4.85474 15.5266 4.85474 16.4781 5.44067 17.0641L12.9407 24.5641C13.5266 25.15 14.4782 25.15 15.0641 24.5641C15.65 23.9781 15.65 23.0266 15.0641 22.4406L10.1188 17.5H24.5C25.3297 17.5 26 16.8297 26 16C26 15.1703 25.3297 14.5 24.5 14.5H10.1235L15.0594 9.55937C15.6454 8.97344 15.6454 8.02187 15.0594 7.43594C14.4735 6.85 13.5219 6.85 12.936 7.43594L5.43599 14.9359L5.44067 14.9406Z" fill="black"/>
-                </svg>
-            </a>
-            <h1>{{ $pagetitle }}</h1>
-
-            <a href="{{ route('export', ['id' => $id]) }}">Download</a>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4 p-5 pt-8 lg:p-0">
+                <a href="{{ url()->previous() }}">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.44067 14.9406C4.85474 15.5266 4.85474 16.4781 5.44067 17.0641L12.9407 24.5641C13.5266 25.15 14.4782 25.15 15.0641 24.5641C15.65 23.9781 15.65 23.0266 15.0641 22.4406L10.1188 17.5H24.5C25.3297 17.5 26 16.8297 26 16C26 15.1703 25.3297 14.5 24.5 14.5H10.1235L15.0594 9.55937C15.6454 8.97344 15.6454 8.02187 15.0594 7.43594C14.4735 6.85 13.5219 6.85 12.936 7.43594L5.43599 14.9359L5.44067 14.9406Z" fill="black"/>
+                    </svg>
+                </a>
+                <h1>{{ $pagetitle }}</h1>
+            </div>
+            <div class="flex gap-2 p-5 pt-8 lg:p-0">
+                <div class="group relative">
+                    <button class="flex items-center gap-1 py-2 px-8 hover:bg-bgcolor_bluishlightgray rounded-full">
+                        <img class="icons-lg" src="{{ asset('assets/icons/download-primary.svg') }}" alt="">
+                        <p class="text-paragraph_sm text-txtclr_primary">Download Schedule</p>
+                    </button>
+                    <div class="hidden p-1 absolute w-full group-hover:flex flex-col gap-2 bg-bgcolor_lightgray z-10 rounded-md">
+                        <a href="{{ route('export', ['id' => $id, 'pagetitle' => $pagetitle, 'format' => 'pdf']) }}" class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
+                            <p class="text-paragraph_sm text-primary">Download as PDF</p>
+                        </a>
+                        <a href="{{ route('export', ['id' => $id, 'pagetitle' => $pagetitle, 'format' => 'jpg']) }}" class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
+                            <p class="text-paragraph_sm text-primary">Download as JPG</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="calendar" class="h-full lg:pr-0"></div>
         

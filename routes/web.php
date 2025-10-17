@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use App\Models\Tokens;
 use App\Models\User;
 
-Route::get('/timetable/{id}', [ClassTimeSlotController::class, 'exportTimeSlots'])->name('export');
+Route::get('/timetable/{id}', [ClassTimeSlotController::class, 'exportTimeSlotsSlots'])->name('export');
 
 Route::get('/', function () {
     return view('pages.sign-in', ['pagetitle' => 'Sign In']);
