@@ -88,33 +88,48 @@ class ClassTimeSlotController extends Controller
             return strtotime($item['startTime']);
         })->values()->all();
 
-        $formattedSchedules = [];
+        $formattedSchedules = [
+            1 => [],
+            2 => [],
+            3 => [],
+            4 => [],
+            5 => [],
+            6 => []
+        ];
+        
 
-        foreach ($schedules as $schedule) {
-   
-            array_push($formattedSchedules, [
-                "title" => $schedule['title'],
-                "startTime" => Carbon::createFromFormat('H:i:s', $schedule['startTime'])->format('g:i A'),
-                "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
-                "daysOfWeek" => $schedule['daysOfWeek'],
-                "extendedProps" => [
-                    "teacherName" => $schedule['extendedProps']['teacherName'],
-                    "roomNumber" => $schedule['extendedProps']['roomNumber'],
-                    "roomType" => $schedule['extendedProps']['roomType'],
-                ]
-            ]);
+        foreach ($formattedSchedules as $key => $array) {
+            
+            foreach ($schedules as $schedule) {
+                if ($schedule['daysOfWeek'][0] === $key) {
+                    array_push($formattedSchedules[$key], [
+                        "title" => $schedule['title'],
+                        "startTime" => Carbon::createFromFormat('H:i:s', $schedule['startTime'])->format('g:i A'),
+                        "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
+                        "daysOfWeek" => $schedule['daysOfWeek'][0],
+                        "extendedProps" => [
+                            "teacherName" => $schedule['extendedProps']['teacherName'],
+                            "roomNumber" => $schedule['extendedProps']['roomNumber'],
+                            "roomType" => $schedule['extendedProps']['roomType'],
+                        ]
+                    ]);
+                }
+
+            }
 
         }
 
         $days = [
-            1 => 'Monday',
-            2 => 'Tuesday',
-            3 => 'Wednesday',
-            4 => 'Thursday',
-            5 => 'Friday',
-            6 => 'Saturday'
+            'Monday' => count($formattedSchedules[1]),
+            'Tuesday' => count($formattedSchedules[2]),
+            'Wednesday' => count($formattedSchedules[3]),
+            'Thursday' => count($formattedSchedules[4]),
+            'Friday' => count($formattedSchedules[5]), 
+            'Saturday' => count($formattedSchedules[6])
         ];
 
-        return view('components.timetable-layout', ['id' => $id, 'schedules' => $formattedSchedules, 'days' => $days]);
+        $formattedSchedules = array_combine(array_keys($days), array_values($formattedSchedules));
+
+        return view('components.timetable-layout', ['id' => $id, 'days' => $formattedSchedules, 'rowCount' => max(array_values($days))]);
     }
 }

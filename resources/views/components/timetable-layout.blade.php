@@ -1,59 +1,25 @@
-<style>
-    .table-data {
-        width: 15%;
-        text-align: center; 
-    }
-
-    .time {
-        text-align: center;
-    }
-
-    table {
-        
-    }
-</style>
-
-
 @vite(['resources/css/app.css'])
 
-<main class="p-4">
-    <table class="border border-black divide-x divide-y divide-black" width="100%" cellspacing="0" cellpadding="5">
-        <thead>
-            <tr>
-                <th class="table-data">Monday</th>
-                <th class="table-data">Tuesday</th>
-                <th class="table-data">Wednesday</th>
-                <th class="table-data">Thursday</th>
-                <th class="table-data">Friday</th>
-                <th class="table-data">Saturday</th>
-            </tr>
-        </thead>
-        <tbody class="divide-x divide-y divide-black">
-            @foreach($schedules as $schedule)
-                <tr>
-                    @foreach($days as $day)
-                        @if($day === $days[$schedule['daysOfWeek'][0]])
-                            <td class="time border border-black">
-                                <p>{{ $days[$schedule['daysOfWeek'][0]] }}</p>
-                                <p>{{ $schedule['title'] }}</p>
-                                <p>{{ $schedule['extendedProps']['roomType'] }}</p>
-                                <p>{{ $schedule['extendedProps']['roomNumber'] }}</p>
-                                <p>{{ $schedule['startTime'] . ' - ' . $schedule['endTime'] }}</p>
-                                <p>{{ $schedule['extendedProps']['teacherName'] }}</p>
-                            </td>
-                        @else
-                            <td class="time border border-black">
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                            </td>
-                        @endif
+<main class="p-4 w-full h-full">
+    <div>
+        <div class="flex w-full h-full">
+            @foreach($days as $day => $timeslots)
+                <div class="w-1/6 flex flex-col mx-1 h-full">
+                    <h3 class="text-center p-2 bg-bgcolor_lightgray text-txtclr_black rounded-md">{{ $day }}</h3>
+                    @foreach($timeslots as $timeslot)
+                        <div class="mt-2 p-1 flex flex-col gap-1 bg-bgcolor_bluishlightgray rounded-md">
+                            <h3 class="p-2 text-center font-bold w-full bg-primary text-txtclr_white rounded-md">{{ $timeslot['title'] }}</h3>
+                            <p class="text-center">{{ $timeslot['extendedProps']['roomType'] }}</p>
+                            <p class="text-center">{{ $timeslot['extendedProps']['roomNumber'] }}</p>
+                            <p class="text-center">{{ $timeslot['startTime'] . ' - ' . $timeslot['endTime'] }}</p>
+                            <p class="text-center">{{ $timeslot['extendedProps']['teacherName'] }}</p>
+                        </div>
                     @endforeach
-                </tr>
+                    {{-- @if(count($timeslots) < $rowCount) --}}
+                        <div class="mt-2 px-2 py-4 bg-bgcolor_lightgray rounded-md flex-1"></div>
+                    {{-- @endif --}}
+                </div>
             @endforeach
-        </tbody>
-    </table>
+        </div>
+    </div>
 </main>
