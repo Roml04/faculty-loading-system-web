@@ -1,6 +1,12 @@
-@vite(['resources/css/calendar.css'])
+@vite(['resources/css/calendar.css', 'resources/js/html2canvas.js', 'resources/css/media-queries.css'])
+
 <x-layout :pagetitle="$pagetitle">
 
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
     <dialog id="eventPopup" class="cstm-fc-event-popup outline-none">
         <div class="flex flex-col gap-4">
             <div class="flex justify-between items-center">
@@ -33,7 +39,7 @@
         </div>
     </dialog>
 
-    <main id="main-element" class="w-full flex flex-col h-full gap-3 lg:px-5 lg:pt-8">
+    <main id="main-element" class="w-full flex flex-col min-h-full gap-3 lg:px-5 lg:pt-8">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4 p-5 pt-8 lg:p-0">
                 <a href="{{ url()->previous() }}">
@@ -50,12 +56,12 @@
                         <p class="text-paragraph_sm text-txtclr_primary">Download Schedule</p>
                     </button>
                     <div class="hidden p-1 absolute w-full group-hover:flex flex-col gap-2 bg-bgcolor_lightgray z-10 rounded-md">
-                        <a href="{{ route('export', ['id' => $id, 'pagetitle' => $pagetitle, 'format' => 'pdf']) }}" class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
+                        <button id="exportPdf"  class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
                             <p class="text-paragraph_sm text-primary">Download as PDF</p>
-                        </a>
-                        <a href="{{ route('export', ['id' => $id, 'pagetitle' => $pagetitle, 'format' => 'jpg']) }}" class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
+                        </button>
+                        <button id="exportJpg" class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
                             <p class="text-paragraph_sm text-primary">Download as JPG</p>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -155,5 +161,29 @@
 
               </script>
         @endpush
+    
     </main>
+    <div id="timetable" class="hidden bg-bgcolor_white z-10 w-full h-full">
+        <h1 class="py-2">{{ $pagetitle }}</h1>
+        <div class="flex w-full h-full">
+            @foreach($formattedSchedules as $day => $timeslots)
+                <div class="w-1/6 flex flex-col mx-1 h-full">
+                    <h3 class="text-center p-2 bg-bgcolor_lightgray text-txtclr_black rounded-md">{{ $day }}</h3>
+                    @foreach($timeslots as $timeslot)
+                        <div class="mt-2 p-1 flex flex-col bg-bgcolor_bluishlightgray rounded-md">
+                            <h3 class="p-1 text-center font-bold w-full bg-primary text-txtclr_white rounded-md">{{ $timeslot['title'] }}</h3>
+                            <p class="text-paragraph_sm text-center">{{ $timeslot['extendedProps']['roomType'] }}</p>
+                            <p class="text-paragraph_sm text-center">{{ $timeslot['extendedProps']['roomNumber'] }}</p>
+                            <p class="text-paragraph_sm text-center">{{ $timeslot['startTime'] . ' - ' . $timeslot['endTime'] }}</p>
+                            <p class="text-paragraph_sm text-center">{{ $timeslot['extendedProps']['teacherName'] }}</p>
+                        </div>
+                    @endforeach
+                    {{-- <div class="mt-2 px-2 py-4 bg-bgcolor_lightgray rounded-md flex-1"></div> --}}
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 </x-layout>

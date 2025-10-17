@@ -1,7 +1,7 @@
 @vite(['resources/css/app.css'])
 <x-layout :pagetitle="$pagetitle">
     <main class="p-4 w-full">
-        <div>
+        <div id="timetable">
             <h1 class="py-2">{{ $pagetitle }}</h1>
             <div class="flex w-full h-full">
                 @foreach($formattedSchedules as $day => $timeslots)
@@ -16,7 +16,7 @@
                                 <p class="text-paragraph_sm text-center">{{ $timeslot['extendedProps']['teacherName'] }}</p>
                             </div>
                         @endforeach
-                        <div class="mt-2 px-2 py-4 bg-bgcolor_lightgray rounded-md flex-1"></div>
+                        {{-- <div class="mt-2 px-2 py-4 bg-bgcolor_lightgray rounded-md flex-1"></div> --}}
                     </div>
                 @endforeach
             </div>

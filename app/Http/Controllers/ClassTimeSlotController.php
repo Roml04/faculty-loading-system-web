@@ -6,6 +6,7 @@ use App\Models\Section;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Spatie\Browsershot\Browsershot;
 
 use function Spatie\LaravelPdf\Support\pdf;
@@ -65,99 +66,78 @@ class ClassTimeSlotController extends Controller
         return response()->json($events);
     }
 
+    /*
+    * For deprecation
+    */
     public function exportTimeSlotsSlots($id, Request $request) {
 
-        $section = Section::whereId($id)->first();
+        // $section = Section::whereId($id)->first();
         
-        $classtimeslots = $section->classtimeslot;
+        // $classtimeslots = $section->classtimeslot;
 
-        foreach($classtimeslots as $classtimeslot) {
+        // foreach($classtimeslots as $classtimeslot) {
+        //     $events[] = [
+        //         "title" => $classtimeslot->courses->course_name,
+        //         "startTime" => $classtimeslot->start,
+        //         "endTime" => $classtimeslot->end,
+        //         "daysOfWeek" => [$classtimeslot->day_of_week],
+        //         "extendedProps" => [
+        //             "teacherName" => $classtimeslot->teachers->teacher_name,
+        //             "roomNumber" => $classtimeslot->rooms->room_name,
+        //             "roomType" => ucfirst($classtimeslot->rooms->room_type),
+        //         ]
+        //     ];
+        // }
 
-            $events[] = [
-                "title" => $classtimeslot->courses->course_name,
-                "startTime" => $classtimeslot->start,
-                "endTime" => $classtimeslot->end,
-                "daysOfWeek" => [$classtimeslot->day_of_week],
-                "extendedProps" => [
-                    "teacherName" => $classtimeslot->teachers->teacher_name,
-                    "roomNumber" => $classtimeslot->rooms->room_name,
-                    "roomType" => ucfirst($classtimeslot->rooms->room_type),
-                ]
-            ];
-        }
+        // $schedules = collect($events);
 
-        $schedules = collect($events);
+        // $schedules = $schedules->sortBy(function($item) {
+        //     return strtotime($item['startTime']);
+        // })->values()->all();
 
-        $schedules = $schedules->sortBy(function($item) {
-            return strtotime($item['startTime']);
-        })->values()->all();
-
-        $formattedSchedules = [
-            1 => [],
-            2 => [],
-            3 => [],
-            4 => [],
-            5 => [],
-            6 => []
-        ];
+        // $formattedSchedules = [
+        //     1 => [],
+        //     2 => [],
+        //     3 => [],
+        //     4 => [],
+        //     5 => [],
+        //     6 => []
+        // ];
         
-        foreach ($formattedSchedules as $key => $array) {
+        // foreach ($formattedSchedules as $key => $array) {
             
-            foreach ($schedules as $schedule) {
-                if ($schedule['daysOfWeek'][0] === $key) {
-                    array_push($formattedSchedules[$key], [
-                        "title" => $schedule['title'],
-                        "startTime" => Carbon::createFromFormat('H:i:s', $schedule['startTime'])->format('g:i A'),
-                        "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
-                        "daysOfWeek" => $schedule['daysOfWeek'][0],
-                        "extendedProps" => [
-                            "teacherName" => $schedule['extendedProps']['teacherName'],
-                            "roomNumber" => $schedule['extendedProps']['roomNumber'],
-                            "roomType" => $schedule['extendedProps']['roomType'],
-                        ]
-                    ]);
-                }
+        //     foreach ($schedules as $schedule) {
+        //         if ($schedule['daysOfWeek'][0] === $key) {
+        //             array_push($formattedSchedules[$key], [
+        //                 "title" => $schedule['title'],
+        //                 "startTime" => Carbon::createFromFormat('H:i:s', $schedule['startTime'])->format('g:i A'),
+        //                 "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
+        //                 "daysOfWeek" => $schedule['daysOfWeek'][0],
+        //                 "extendedProps" => [
+        //                     "teacherName" => $schedule['extendedProps']['teacherName'],
+        //                     "roomNumber" => $schedule['extendedProps']['roomNumber'],
+        //                     "roomType" => $schedule['extendedProps']['roomType'],
+        //                 ]
+        //             ]);
+        //         }
 
-            }
+        //     }
 
-        }
+        // }
 
-        $days = [
-            'Monday' => count($formattedSchedules[1]),
-            'Tuesday' => count($formattedSchedules[2]),
-            'Wednesday' => count($formattedSchedules[3]),
-            'Thursday' => count($formattedSchedules[4]),
-            'Friday' => count($formattedSchedules[5]), 
-            'Saturday' => count($formattedSchedules[6])
-        ];
+        // $days = [
+        //     'Monday' => count($formattedSchedules[1]),
+        //     'Tuesday' => count($formattedSchedules[2]),
+        //     'Wednesday' => count($formattedSchedules[3]),
+        //     'Thursday' => count($formattedSchedules[4]),
+        //     'Friday' => count($formattedSchedules[5]), 
+        //     'Saturday' => count($formattedSchedules[6])
+        // ];
 
-        $formattedSchedules = array_combine(array_keys($days), array_values($formattedSchedules));
+        // $formattedSchedules = array_combine(array_keys($days), array_values($formattedSchedules));
 
-        $pagetitle = $request['pagetitle'];
+        // // return view('components.timetable-layout', ['id' => $id, 'formattedSchedules' => $formattedSchedules, 'pagetitle' => $request['pagetitle']])->render();
         
-        // return view('components.timetable-layout', ['formattedSchedules' => $formattedSchedules, 'pagetitle' => $request['pagetitle']]);
-
-        if($request['format'] === 'pdf') {
-            return pdf()
-                ->view('components.timetable-layout', ['formattedSchedules' => $formattedSchedules, 'pagetitle' => $pagetitle])
-                ->name("$pagetitle/SCHEDULE.pdf")
-                ->landscape()
-                ->download();
-        }
-
-        if($request['format'] === 'jpg') {
-            $html = view('components.timetable-layout', ['formattedSchedules' => $formattedSchedules, 'pagetitle' => $pagetitle])->render();
-
-            $jpgBinary = Browsershot::html($html)
-                ->showBackground()
-                ->fullPage()
-                ->deviceScaleFactor(2)
-                ->setScreenshotType('jpeg', 90)
-                ->screenshot();               
-
-            return response($jpgBinary)
-                ->header('Content-Type', 'image/jpeg')
-                ->header('Content-Disposition', "attachment; filename=\"$pagetitle\_SCHEDULE.jpg\"");
-        }
+        // return view('components.timetable-layout', ['id' => $id, 'formattedSchedules' => $formattedSchedules, 'pagetitle' => $request['pagetitle']])->render();
     }
 }
