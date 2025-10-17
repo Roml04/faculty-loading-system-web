@@ -11,7 +11,8 @@ export default defineConfig({
                 'resources/css/style.css', 
                 'resources/js/app.js', 
                 'resources/js/bootstrap.js', 
-                'resources/js/program-selection.js'
+                'resources/js/program-selection.js',
+                'resources/js/html2canvas.js'
             ],
             refresh: true,
         }),
