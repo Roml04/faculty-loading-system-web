@@ -50,19 +50,11 @@
                 <h1>{{ $pagetitle }}</h1>
             </div>
             <div class="flex gap-2 p-5 pt-8 lg:p-0">
-                <div class="group relative">
-                    <button class="flex items-center gap-1 py-2 px-8 hover:bg-bgcolor_bluishlightgray rounded-full">
+                <div>
+                    <button id="exportJpg" class="flex items-center gap-1 py-2 px-8 hover:bg-bgcolor_bluishlightgray rounded-full">
                         <img class="icons-lg" src="{{ asset('assets/icons/download-primary.svg') }}" alt="">
                         <p class="text-paragraph_sm text-txtclr_primary">Download Schedule</p>
                     </button>
-                    <div class="hidden p-1 absolute w-full group-hover:flex flex-col gap-2 bg-bgcolor_lightgray z-10 rounded-md">
-                        <button id="exportPdf"  class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
-                            <p class="text-paragraph_sm text-primary">Download as PDF</p>
-                        </button>
-                        <button id="exportJpg" class="px-6 py-2 flex items-center gap-2 hover:bg-bgcolor_bluishlightgray rounded-md">
-                            <p class="text-paragraph_sm text-primary">Download as JPG</p>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
