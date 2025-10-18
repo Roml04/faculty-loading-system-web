@@ -40,7 +40,7 @@
             {{-- Programs --}}
             <section id="programscontainer" class="w-full h-fit px-4 py-8 flex flex-col gap-8">
 
-                <div class="flex flex-col gap-8">
+                <div class="h-[80vh] flex flex-col gap-8 overflow-y-scroll">
                     <div class="flex flex-col gap-2">
                         <h2>Tertiary</h2>
                         @if(count($courses) > 0)
@@ -73,7 +73,7 @@
                 <div class="flex flex-col gap-8">
                     <div class="flex flex-col gap-2">
                         @if(count($teachers) > 0)
-                        <div class="flex flex-col sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5">
+                        <div class="h-[80vh] flex flex-col sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 overflow-y-scroll">
                             @foreach ($teachers as $item)
                             <x-molecules.teacher-list :id="$item->id" :teachername="$item->teacher_name" />
                             @endforeach
