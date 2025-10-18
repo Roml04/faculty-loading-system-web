@@ -6,14 +6,20 @@ const exportPdf = document.getElementById('exportPdf');
 const exportJpg = document.getElementById('exportJpg');
 
 exportPdf.addEventListener('click', () => {            
-    element.classList.remove('hidden');            
+    element.classList.remove('hidden');     
+    
+    const isSmallDevice = window.innerWidth < 768;
 
     const opt = {
         margin:       0.25,           // inches
         filename:     'SCHEDULE.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },  // higher scale for better resolution
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+        html2canvas:  { 
+            scale: 2,
+            scrollX: 0,
+            scrollY: 0,
+        },  
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
     
     html2pdf().set(opt).from(element).save();
@@ -34,7 +40,7 @@ exportJpg.addEventListener('click', async () => {
         // Capture using html2canvas
         const canvas = await html2canvas(element, { 
             scale: 2,
-        }); // higher scale = better resolution
+        }); 
 
         // Convert canvas to JPG
         const imageData = canvas.toDataURL('image/jpeg', 0.98);

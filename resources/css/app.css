@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base { img { display: initial; } }
 /* Font Styles */
 
 h1 {
