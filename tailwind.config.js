@@ -22,6 +22,8 @@ export default {
                 bgcolor_lightgray: '#E8E8ED',
                 bgcolor_gray: '#E0E0E0',
                 bgcolor_bluishlightgray: '#CDDDF0',
+                primary_pressed: '#09449C',
+                primary_hovered: '#0073BA',
                 stroke_lightblue: '#B6C8E2',
                 stroke_gray: '#ACACAC',
                 stroke_black: '#444444',

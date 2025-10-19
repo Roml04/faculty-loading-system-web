@@ -1,0 +1,70 @@
+@media screen and (max-width: 639px) {
+    html {
+        font-size: 14px;
+    }
+    .text-headline {
+        line-height: 45px;
+    }
+    .text-subheadline {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 767px) {
+    html {
+        font-size: 14px;
+    }
+
+    .text-headline {
+        font-size: 3rem;
+        line-height: 50px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {    
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+    html {
+        font-size: 16x;
+    }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1535px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1536px) and (max-width: 1919px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    html {
+        font-size:24px;
+    }
+}
+
+@media screen and (min-aspect-ratio: 3/5) and (max-aspect-ratio: 4/3) {
+    .banner-section {
+        @apply p-12
+    }
+    .program-card-container {
+        @apply grid-cols-2
+    }
+    .programs-container {
+        @apply px-4
+    }
+}
+
+@media screen and (aspect-ratio: 5/4) {
+    .programs-container {
+        @apply px-20
+    }
+}

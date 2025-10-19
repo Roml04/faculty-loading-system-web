@@ -1,9 +1,11 @@
 @props(['inputvalue' => null])
 
-<form class="flex gap-[0.5em]" action="{{ route('search') }}">
+<form class="w-full md:w-1/3" action="{{ route('search') }}">
     @csrf
-    <input class="outline-none w-full px-[1em] py-[0.75em] rounded-md border border-stroke_lightblue" name="search_query" value="{{ $inputvalue }}" type="text" placeholder="Search Schedule" required>
-    <button class="cstm-button px-[1.5em] py-[0.75em] rounded-md bg-primary" type="submit" value="">
-        <p class="text-txtclr_white">Search</p>
-    </button>
+    <label for="search" class="bg-bgcolor_lightgray flex items-center justify-between rounded-full px-6 py-2 gap-2">
+        <input id="search" class="w-full bg-transparent focus:outline-none" type="text" placeholder="Search Schedules" name="search_query" value="{{ $inputvalue }}" required>
+        <button type="submit">
+            <img src="{{ asset('assets/icons/search.svg') }}" alt="">
+        </button>
+    </label>
 </form>

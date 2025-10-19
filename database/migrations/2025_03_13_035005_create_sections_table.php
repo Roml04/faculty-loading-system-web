@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('section_name');
-            $table->text('year')->check("year IN ('first_year', 'second_year', 'third_year', 'fourth_year')");
-            $table->text('term')->check("term IN ('first_term', 'second_term')");
+            $table->unsignedTinyInteger('year')->check('year IN (1, 2, 3, 4, 11, 12)');
+            $table->unsignedTinyInteger('term')->check("term IN (1, 2)");
+            $table->string('level')->check("level IN ('shs', 'tertiary')");
             $table->foreignId('programs_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

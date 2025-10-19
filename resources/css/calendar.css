@@ -1,0 +1,162 @@
+#calendar {
+    @apply lg:p-10 lg:pr-0 lg:pb-2 border-0 lg:border border-stroke_gray rounded-md
+}
+
+.fc-event, .fc-event-start, .fc-event-end, .fc-event-past, .fc-timegrid-event, .fc-v-event {
+    overflow: hidden;
+}
+
+.fc-day-today {
+  background-color: inherit !important;
+}
+
+.fc-event {
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.fc-timegrid-slots tr {
+    height: 5.25rem !important;
+}
+
+.fc-timegrid-slots thead {
+    border: none !important;
+}
+
+.fc-scroller::-webkit-scrollbar {
+    width: 8px;
+    height: 2px;
+}
+
+.fc .fc-timegrid-slot-label {
+    @apply w-fit align-top
+}
+
+.fc-col-header-cell-cushion {
+    text-transform: uppercase;
+}
+
+.fc-timegrid-axis,
+.fc-col-header-cell, .fc-day .fc-day-mon, .fc-day-future {
+    border-bottom: none !important;
+    border-left: none !important;
+}
+
+
+.fc-scrollgrid, .fc-scrollgrid-liquid {
+    border: none !important;
+}
+
+.fc .fc-timegrid-slot-label {
+    vertical-align: top;
+}
+
+/* FullCalendar Scroller */
+
+th > .fc-scroller-harness > div {
+    overflow: hidden !important;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb {
+    background: var(--bgclr-gray);
+    border-radius: 10px;
+}
+
+.fc-scroller::-webkit-scrollbar-track {
+    background: var(--bgclr-white);
+}
+
+/* Custom FullCalendar Styles */
+
+.cstm-fc-event-field {
+    @apply bg-primary rounded-full
+}
+
+.cstm-fc-event-field > svg {
+    @apply aspect-square min-w-4
+}
+
+.cstm-fc-event-field > p {
+    @apply overflow-hidden text-nowrap text-ellipsis
+}
+
+.cstm-fc-event-title {
+    @apply p-1
+}
+
+.cstm-fc-event-field {
+    @apply p-2 flex items-center 
+}
+
+.cstm-fc-event-popup {
+    @apply w-3/4 lg:w-2/5 h-fit bg-white border border-stroke_lightblue z-10 p-6 md:p-3
+}
+
+.cstm-fc-event-popup::backdrop {
+    @apply bg-[rgba(0,0,0,0.5)]
+}
+
+.cstm-fc-popup-field {
+    @apply p-4 md:p-3 bg-bgcolor_lightgray flex items-center gap-4 rounded-md
+}
+
+.eventitleh3 {
+    @apply text-4xl sm:text-base
+}
+
+.eventfieldpar {
+    @apply text-2xl lg:text-base !important
+}
+
+@media screen and (max-width: 639px) {
+    html {
+        font-size: 8px !important;
+    }
+    .text-headline {
+        line-height: 45px;
+    }
+    .text-subheadline {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 767px) {
+    html {
+        font-size: 10px;
+    }
+
+    .text-headline {
+        font-size: 3rem;
+        line-height: 50px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1535px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1536px) and (max-width: 1919px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    html {
+        font-size:24px;
+    }
+}

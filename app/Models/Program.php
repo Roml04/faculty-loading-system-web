@@ -9,6 +9,12 @@ class Program extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'program_name',
+        'level',
+        'path'
+    ];
+
     public function section() {
         return $this->hasMany(Section::class, 'programs_id');
     }

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
+use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Spatie\Browsershot\Browsershot;
+
+use function Spatie\LaravelPdf\Support\pdf;
 
 class ClassTimeSlotController extends Controller
 {
-    public function fetchTimeslots($id) {
+    public function sectionTimeSlots($id) {
         $section = Section::whereId($id)->first();
         
         $classtimeslots = $section->classtimeslot;
@@ -23,6 +29,36 @@ class ClassTimeSlotController extends Controller
                     "teacherName" => $classtimeslot->teachers->teacher_name,
                     "roomNumber" => $classtimeslot->rooms->room_name,
                     "roomType" => ucfirst($classtimeslot->rooms->room_type),
+                ]
+            ];
+        }
+
+        $schedules = collect($events);
+
+        $schedules = $schedules->sortBy(function($item) {
+            return strtotime($item['startTime']);
+        })->values()->all();
+        
+        return response()->json($schedules);
+
+    }
+
+    public function teacherTimeSlots($id) {
+        $teacher = Teacher::whereId($id)->first();
+
+        $teachertimeslots = $teacher->tertiarysectionclass;
+
+        foreach($teachertimeslots as $teachertimeslots) {
+
+            $events[] = [
+                "title" => $teachertimeslots->courses->course_name,
+                "startTime" => $teachertimeslots->start,
+                "endTime" => $teachertimeslots->end,
+                "daysOfWeek" => [$teachertimeslots->day_of_week],
+                "extendedProps" => [
+                    "teacherName" => $teachertimeslots->teachers->teacher_name,
+                    "roomNumber" => $teachertimeslots->rooms->room_name,
+                    "roomType" => ucfirst($teachertimeslots->rooms->room_type),
                 ]
             ];
         }
