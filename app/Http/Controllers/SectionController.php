@@ -29,8 +29,10 @@ class SectionController extends Controller
 
         $classtimeslots = $section->classtimeslot;
 
+        $events = [];
+
         foreach($classtimeslots as $classtimeslot) {
-            $events[] = [
+            $events = [
                 "title" => $classtimeslot->courses->course_name,
                 "startTime" => $classtimeslot->start,
                 "endTime" => $classtimeslot->end,
