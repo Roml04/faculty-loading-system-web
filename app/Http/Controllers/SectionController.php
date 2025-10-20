@@ -9,18 +9,22 @@ use Illuminate\Support\Carbon;
 
 class SectionController extends Controller
 {
-    public function indexSections($id, Request $request) {
+    public function indexSections($id, Request $request)
+    {
         $program = Program::where('id', $id)->first();
 
-        $sections = [];
+        // Sort sections by numeric part (e.g., 101, 102, 103)
+        $sections = $program->section->sortBy(function ($section) {
+            // Extract the numeric part from section name (e.g., "BSCS101" → 101)
+            preg_match('/\d+/', $section->section_name, $matches);
+            return isset($matches[0]) ? (int)$matches[0] : 0;
+        })->values();
 
-        foreach($program->section as $section) {
-            // if(count($section->classtimeslot) > 0) {
-                $sections[] = $section;
-            // }
-        }
-
-        return view('pages.section-schedules', ['sections' => $sections, 'programname' => $program->program_name, 'return_to' => $request->return_to]);
+        return view('pages.section-schedules', [
+            'sections' => $sections,
+            'programname' => $program->program_name,
+            'return_to' => $request->return_to,
+        ]);
     }
 
     public function viewSection($id, Request $request) {
