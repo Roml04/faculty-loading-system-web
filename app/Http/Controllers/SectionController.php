@@ -32,7 +32,8 @@ class SectionController extends Controller
         $events = [];
 
         foreach($classtimeslots as $classtimeslot) {
-            $events = [
+
+            array_push($events, [
                 "title" => $classtimeslot->courses->course_name,
                 "startTime" => $classtimeslot->start,
                 "endTime" => $classtimeslot->end,
@@ -42,7 +43,7 @@ class SectionController extends Controller
                     "roomNumber" => $classtimeslot->rooms->room_name,
                     "roomType" => ucfirst($classtimeslot->rooms->room_type),
                 ]
-            ];
+            ]);
         }
 
         $schedules = collect($events);
