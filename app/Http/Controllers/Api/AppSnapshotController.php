@@ -31,7 +31,8 @@ class AppSnapshotController extends Controller
         try {
             $validated = $request->validate([
                 'deviceId' => 'required',
-                'snapshot' => 'required|array'
+                'snapshot' => 'required|array',
+                'currentTerm' => 'required|numeric'
             ]);
 
             AppSnapshot::create([

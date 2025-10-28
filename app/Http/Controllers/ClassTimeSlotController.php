@@ -4,12 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use App\Models\Teacher;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Spatie\Browsershot\Browsershot;
-
-use function Spatie\LaravelPdf\Support\pdf;
 
 class ClassTimeSlotController extends Controller
 {
