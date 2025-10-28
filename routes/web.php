@@ -48,7 +48,7 @@ Route::get('/signin', function () {
 
 Route::get('/register', function () {
 
-    if (request()->get('source') !== 'desktop') {
+        if (request()->get('source') !== 'desktop') {
         abort(403);
     }
 

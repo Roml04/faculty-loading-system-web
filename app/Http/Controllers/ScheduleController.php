@@ -52,9 +52,6 @@ class ScheduleController extends Controller
             'sectiontimeslots' => 'array',
             'sectiontimeslots.*.sectionId' => 'numeric',
             'sectiontimeslots.*.classTimeId' => 'numeric',
-            // 'semester' => 'array',
-            // 'semester.term' => ['required', 'numeric'],
-            // 'semester.termName' => ['required', 'string']
         ]);
 
         try {
@@ -75,10 +72,8 @@ class ScheduleController extends Controller
                     'id' => $program['programId'],
                     'program_name' => $program['programName'],
                     'level' => $program['educLevel'],
-                    // 'path' => $program['path']
                 ],
                 uniqueBy: ['id'],
-                // update: ['programName', 'educLevel', 'path']
                 update: ['program_name', 'level']
                 );
                 
@@ -128,25 +123,21 @@ class ScheduleController extends Controller
             }
             
             $sections = $validated['sections'];
-            // $semester = $validated['semester'];
             
             foreach($sections as $section) {
 
-                // if($section['term'] === $semester['term']) {
-                    Section::upsert([
-                            'id' => $section['sectionId'],
-                            'section_name' => $section['sectionName'],
-                            'year' => $section['year'],
-                            'term' => $section['term'],
-                            'level' => $section['level'],
-                            'programs_id' => $section['programId']
-                        ],
-                        uniqueBy: ['id'],
-                        update: ['section_name', 'year', 'term', 'programs_id']
-                    );
-                    
-                // }
-    
+                Section::upsert([
+                        'id' => $section['sectionId'],
+                        'section_name' => $section['sectionName'],
+                        'year' => $section['year'],
+                        'term' => $section['term'],
+                        'level' => $section['level'],
+                        'programs_id' => $section['programId']
+                    ],
+                    uniqueBy: ['id'],
+                    update: ['section_name', 'year', 'term', 'programs_id']
+                );
+
             }
     
             $classtimeslots = $validated['classtimeslots'];
@@ -173,7 +164,6 @@ class ScheduleController extends Controller
             foreach($sectiontimeslots as $sectiontimeslot) {
                 
                 SectionTimeSlot::upsert([
-                        // 'id' => $sectiontimeslot['sectionid'],
                         'sections_id' => $sectiontimeslot['sectionId'],
                         'class_time_slots_id' => $sectiontimeslot['classTimeId']
                     ],
@@ -192,18 +182,5 @@ class ScheduleController extends Controller
             return ['message' => $error->getMessage()];
         
         }
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
