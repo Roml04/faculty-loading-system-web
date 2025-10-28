@@ -37,7 +37,8 @@ class AppSnapshotController extends Controller
 
             AppSnapshot::create([
                 'snapshot' => $validated['snapshot'],
-                'device_id' => $validated['deviceId']
+                'device_id' => $validated['deviceId'],
+                'current_term' => $validated['currentTerm'] 
             ]);
 
             return response()->json([
