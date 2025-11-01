@@ -10,19 +10,35 @@ use Illuminate\Support\Carbon;
 class TeacherController extends Controller
 {
     public function show($id) {
-        $teacher = Teacher::whereId($id)->first();
+        $teacher = Teacher::with([
+                'tertiarysectionclass.sections',
+                'tertiarysectionclass.courses',
+                'tertiarysectionclass.rooms',
+                'tertiarysectionclass.teachers'
+            ])->findOrFail($id);
 
         $classtimeslots = $teacher->tertiarysectionclass;
 
         $events = [];
 
         foreach($classtimeslots as $classtimeslot) {
+
+            $sections = '';
+
+            foreach($classtimeslot->sections as $section) {
+                $section->section_name = ', ' . $section->section_name;
+                $sections .= $section->section_name;
+            }
+
+            $sections = trim(substr($sections, 1));
+
             $events[] = [
                 "title" => $classtimeslot->courses->course_name,
                 "startTime" => $classtimeslot->start,
                 "endTime" => $classtimeslot->end,
                 "daysOfWeek" => [$classtimeslot->day_of_week],
                 "extendedProps" => [
+                    "sections" => $sections,
                     "teacherName" => $classtimeslot->teachers->teacher_name,
                     "roomNumber" => $classtimeslot->rooms->room_name,
                     "roomType" => ucfirst($classtimeslot->rooms->room_type),
@@ -55,6 +71,7 @@ class TeacherController extends Controller
                         "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
                         "daysOfWeek" => $schedule['daysOfWeek'][0],
                         "extendedProps" => [
+                            "sections" => $schedule['extendedProps']['sections'],
                             "teacherName" => $schedule['extendedProps']['teacherName'],
                             "roomNumber" => $schedule['extendedProps']['roomNumber'],
                             "roomType" => $schedule['extendedProps']['roomType'],

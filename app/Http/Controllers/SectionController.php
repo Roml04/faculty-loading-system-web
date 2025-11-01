@@ -27,13 +27,25 @@ class SectionController extends Controller
 
     public function viewSection($id, Request $request) {
 
-        $section = Section::whereId($id)->first();
+        $section = Section::with([
+            "classtimeslot.sections"
+        ])->findOrFail($id);
+        
+        $sectionName = $section->section_name;
 
         $classtimeslots = $section->classtimeslot;
 
         $events = [];
-
         foreach($classtimeslots as $classtimeslot) {
+
+            $sections = '';
+
+            foreach($classtimeslot->sections as $section) {
+                $section->section_name = ', ' . $section->section_name;
+                $sections .= $section->section_name;
+            }
+
+            $sections = trim(substr($sections, 1));
 
             array_push($events, [
                 "title" => $classtimeslot->courses->course_name,
@@ -41,12 +53,14 @@ class SectionController extends Controller
                 "endTime" => $classtimeslot->end,
                 "daysOfWeek" => [$classtimeslot->day_of_week],
                 "extendedProps" => [
+                    "sections" => $sections,
                     "teacherName" => $classtimeslot->teachers->teacher_name,
                     "roomNumber" => $classtimeslot->rooms->room_name,
                     "roomType" => ucfirst($classtimeslot->rooms->room_type),
                 ]
             ]);
         }
+
 
         $schedules = collect($events);
 
@@ -73,6 +87,7 @@ class SectionController extends Controller
                         "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
                         "daysOfWeek" => $schedule['daysOfWeek'][0],
                         "extendedProps" => [
+                            "sections" => $schedule['extendedProps']['sections'],
                             "teacherName" => $schedule['extendedProps']['teacherName'],
                             "roomNumber" => $schedule['extendedProps']['roomNumber'],
                             "roomType" => $schedule['extendedProps']['roomType'],
@@ -95,7 +110,8 @@ class SectionController extends Controller
 
         $formattedSchedules = array_combine(array_keys($days), array_values($formattedSchedules));
 
-        return view('pages.view-schedule', ['id' => $id, 'uri' => 'sections', 'pagetitle' => $section->section_name, 'return_to' => $request->return_to, 'formattedSchedules' => $formattedSchedules]);
+
+        return view('pages.view-schedule', ['id' => $id, 'uri' => 'sections', 'pagetitle' => $sectionName, 'return_to' => $request->return_to, 'formattedSchedules' => $formattedSchedules]);
     }
 }
     

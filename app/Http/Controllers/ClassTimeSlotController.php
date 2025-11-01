@@ -8,13 +8,27 @@ use App\Models\Teacher;
 class ClassTimeSlotController extends Controller
 {
     public function sectionTimeSlots($id) {
-        $section = Section::whereId($id)->first();
+        // $section = Section::whereId($id)->first();
+
+        $section = Section::with([
+            "classtimeslot.sections"
+        ])->findOrFail($id);
         
         $classtimeslots = $section->classtimeslot;
 
         $events = [];
 
+        
         foreach($classtimeslots as $classtimeslot) {
+        
+            $sections = '';
+
+            foreach($classtimeslot->sections as $section) {
+                $section->section_name = ', ' . $section->section_name;
+                $sections .= $section->section_name;
+            }
+
+            $sections = trim(substr($sections, 1));
 
             $events[] = [
                 "title" => $classtimeslot->courses->course_name,
@@ -22,11 +36,13 @@ class ClassTimeSlotController extends Controller
                 "endTime" => $classtimeslot->end,
                 "daysOfWeek" => [$classtimeslot->day_of_week],
                 "extendedProps" => [
+                    "sections" => $sections,
                     "teacherName" => $classtimeslot->teachers->teacher_name,
                     "roomNumber" => $classtimeslot->rooms->room_name,
                     "roomType" => ucfirst($classtimeslot->rooms->room_type),
                 ]
             ];
+
         }
 
         $schedules = collect($events);
@@ -64,7 +80,7 @@ class ClassTimeSlotController extends Controller
                     "endTime" => $slot->end,
                     "daysOfWeek" => [$slot->day_of_week],
                     "extendedProps" => [
-                        "teacherName" => $section->section_name ?? '',
+                        "sections" => $section->section_name ?? '',
                         "roomNumber" => $room->room_name ?? '',
                         "roomType" => ucfirst($room->room_type ?? ''),
                     ]
