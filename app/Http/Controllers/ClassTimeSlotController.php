@@ -38,24 +38,41 @@ class ClassTimeSlotController extends Controller
     }
 
     public function teacherTimeSlots($id) {
-        $teacher = Teacher::whereId($id)->first();
+        // eager-load related models to avoid N+1
+        $teacher = Teacher::with([
+                'tertiarysectionclass.sections',
+                'tertiarysectionclass.courses',
+                'tertiarysectionclass.rooms',
+                'tertiarysectionclass.teachers' // ensure teacher relation is loaded if needed
+            ])->findOrFail($id);
 
-        $teachertimeslots = $teacher->tertiarysectionclass;
+        $timeslots = $teacher->tertiarysectionclass ?? collect();
 
-        foreach($teachertimeslots as $teachertimeslots) {
+        $events = $timeslots->flatMap(function($slot) {
+            $course = $slot->courses ?? null;
+            $room   = $slot->rooms ?? null;
+            $teacherName = $slot->teachers->teacher_name ?? '';
 
-            $events[] = [
-                "title" => $teachertimeslots->courses->course_name,
-                "startTime" => $teachertimeslots->start,
-                "endTime" => $teachertimeslots->end,
-                "daysOfWeek" => [$teachertimeslots->day_of_week],
-                "extendedProps" => [
-                    "teacherName" => $teachertimeslots->teachers->teacher_name,
-                    "roomNumber" => $teachertimeslots->rooms->room_name,
-                    "roomType" => ucfirst($teachertimeslots->rooms->room_type),
-                ]
-            ];
-        }
+            // If a timeslot has multiple sections, return one event per section.
+            $sections = $slot->sections instanceof \Illuminate\Support\Collection
+                ? $slot->sections
+                : collect([$slot->sections]);
+
+            return $sections->map(function($section) use ($slot, $course, $room, $teacherName) {
+                return [
+                    "title" => $course->course_name ?? '',
+                    "startTime" => $slot->start,
+                    "endTime" => $slot->end,
+                    "daysOfWeek" => [$slot->day_of_week],
+                    "extendedProps" => [
+                        // "sectionName" => $section->section_name ?? '',
+                        "teacherName" => $section->section_name ?? '',
+                        "roomNumber" => $room->room_name ?? '',
+                        "roomType" => ucfirst($room->room_type ?? ''),
+                    ]
+                ];
+            });
+        })->sortBy(fn($item) => strtotime($item['startTime']))->values()->all();
 
         return response()->json($events);
     }
