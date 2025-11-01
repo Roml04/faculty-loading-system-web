@@ -30,7 +30,7 @@ class ProgramController extends Controller
         foreach ($programs as $program) {
 
             if (!(file_exists(public_path($program->path)))) {
-                $program->path = 'assets/images/no-img.jpg';
+                $program->path = 'assets/images/no-img.webp';
             }
 
             switch ($program->level) {
