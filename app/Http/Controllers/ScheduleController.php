@@ -11,6 +11,7 @@ use App\Models\SectionTimeSlot;
 use App\Models\Teacher;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ScheduleController extends Controller
 {
@@ -21,7 +22,7 @@ class ScheduleController extends Controller
             'programs.*.programId' => 'numeric',
             'programs.*.programName' => 'string',
             'programs.*.educLevel' => ['string', 'in:tertiary,shs'],
-            'programs.*.path' => ['string', 'nullable'],
+            // 'programs.*.path' => ['string', 'nullable'],
             'teachers' => 'array',
             'teachers.*.teacherId' => 'numeric',
             'teachers.*.firstName' => 'string',
@@ -65,13 +66,40 @@ class ScheduleController extends Controller
             Program::query()->delete();
                             
             $programs = $validated['programs'];
-            
+
+            function searchProgramThumbnail($programName)
+            {
+                $imagePath = public_path('assets/images');
+                $files = File::files($imagePath);
+
+                $imageNames = array_map(fn($file) => pathinfo($file->getFilename(), PATHINFO_FILENAME), $files);
+
+                $normalized = strtolower(preg_replace('/\s+/', '', $programName));
+
+                $bestMatch = null;
+                $bestLength = 0;
+
+                foreach ($imageNames as $imageName) {
+                    $normalizedImage = strtolower(preg_replace('/\s+/', '', $imageName));
+
+                    if (str_contains($normalized, $normalizedImage)) {
+                        if (strlen($normalizedImage) > $bestLength) {
+                            $bestLength = strlen($normalizedImage);
+                            $bestMatch = $imageName;
+                        }
+                    }
+                }
+
+                return $bestMatch ?? 'no-img';
+            }
+
             foreach($programs as $program) {
                 
                 Program::upsert([
                     'id' => $program['programId'],
                     'program_name' => $program['programName'],
                     'level' => $program['educLevel'],
+                    'path' => 'assets/images/' . searchProgramThumbnail($program['programName']) . '.webp'
                 ],
                 uniqueBy: ['id'],
                 update: ['program_name', 'level']
