@@ -6,13 +6,17 @@
 
         {{-- WEB: Nav Bar --}}
         @if (session('role') === 'Teacher')
-            <section class="h-full px-2 py-8 bg-primary hidden md:flex flex-col w-0 md:w-fit gap-2">
+            <section class="h-full px-2 bg-primary hidden md:flex flex-col items-center w-0 md:w-fit gap-2">
+                <img class="w-24 py-4" src="{{ asset('assets/images/sti-logo.webp') }}" alt="">
+                
                 <form id="webNavBar" action="" class="flex flex-col gap-2">
                     @csrf
                 </form>
             </section>
         @else
-            <section section class="h-full bg-primary w-0 md:w-1/12"></section>
+            <section section class="hidden h-full bg-primary md:block md:w-1/12 p-2">
+                <img class="hidden md:block" src="{{ asset('assets/images/sti-logo.webp') }}" alt="">
+            </section>
         @endif
 
         <div class="flex flex-col w-full">

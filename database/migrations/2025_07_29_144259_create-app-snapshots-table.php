@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json('snapshot');
             $table->string('device_id');
-            $table->tinyInteger('current_term');
+            $table->tinyInteger('current_term')->check("level IN (1, 2)");
             $table->timestamps();
         });
     }
