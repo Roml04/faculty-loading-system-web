@@ -12,6 +12,8 @@ class ClassTimeSlotController extends Controller
         
         $classtimeslots = $section->classtimeslot;
 
+        $events = [];
+
         foreach($classtimeslots as $classtimeslot) {
 
             $events[] = [
@@ -38,12 +40,11 @@ class ClassTimeSlotController extends Controller
     }
 
     public function teacherTimeSlots($id) {
-        // eager-load related models to avoid N+1
         $teacher = Teacher::with([
                 'tertiarysectionclass.sections',
                 'tertiarysectionclass.courses',
                 'tertiarysectionclass.rooms',
-                'tertiarysectionclass.teachers' // ensure teacher relation is loaded if needed
+                'tertiarysectionclass.teachers'
             ])->findOrFail($id);
 
         $timeslots = $teacher->tertiarysectionclass ?? collect();
@@ -51,21 +52,18 @@ class ClassTimeSlotController extends Controller
         $events = $timeslots->flatMap(function($slot) {
             $course = $slot->courses ?? null;
             $room   = $slot->rooms ?? null;
-            $teacherName = $slot->teachers->teacher_name ?? '';
 
-            // If a timeslot has multiple sections, return one event per section.
             $sections = $slot->sections instanceof \Illuminate\Support\Collection
                 ? $slot->sections
                 : collect([$slot->sections]);
 
-            return $sections->map(function($section) use ($slot, $course, $room, $teacherName) {
+            return $sections->map(function($section) use ($slot, $course, $room) {
                 return [
                     "title" => $course->course_name ?? '',
                     "startTime" => $slot->start,
                     "endTime" => $slot->end,
                     "daysOfWeek" => [$slot->day_of_week],
                     "extendedProps" => [
-                        // "sectionName" => $section->section_name ?? '',
                         "teacherName" => $section->section_name ?? '',
                         "roomNumber" => $room->room_name ?? '',
                         "roomType" => ucfirst($room->room_type ?? ''),

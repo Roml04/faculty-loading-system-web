@@ -14,6 +14,7 @@ class TeacherController extends Controller
 
         $classtimeslots = $teacher->tertiarysectionclass;
 
+        $events = [];
 
         foreach($classtimeslots as $classtimeslot) {
             $events[] = [
