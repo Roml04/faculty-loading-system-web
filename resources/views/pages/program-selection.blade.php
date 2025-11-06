@@ -47,7 +47,7 @@
                     @else
                         <div>
                             <a href="{{ route('logout') }}" class="flex items-center active:bg-bgcolor-gray rounded-full justify-center w-full">
-                                <img class="icons-def" src="{{ asset('assets/icons/log-out-black.svg') }}" alt="">
+                                <img class="block md:hidden icons-def" src="{{ asset('assets/icons/log-out-black.svg') }}" alt="">
                             </a>
                         </div>
                     @endif
