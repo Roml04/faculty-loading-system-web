@@ -5,7 +5,7 @@
                 <a href="{{ $return_to }}">
                     <img src="{{ asset('assets/icons/angle-left-black.svg') }}" alt="">
                 </a>
-                <h1>{{ $programname }}</h1>
+                <h1 class="truncate">{{ $programname }}</h1>
             </div>
             <x-molecules.search-bar/>
         </section>

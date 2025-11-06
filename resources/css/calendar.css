@@ -68,6 +68,10 @@ th > .fc-scroller-harness > div {
 
 /* Custom FullCalendar Styles */
 
+.cstms-fc-event > * {
+    z-index: 1;
+}
+
 .cstm-fc-event-field {
     @apply bg-primary rounded-full
 }
