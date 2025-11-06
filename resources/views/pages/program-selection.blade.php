@@ -6,16 +6,24 @@
 
         {{-- WEB: Nav Bar --}}
         @if (session('role') === 'Teacher')
-            <section class="h-full px-2 bg-primary hidden md:flex flex-col items-center w-0 md:w-fit gap-2">
-                <img class="w-24 py-4" src="{{ asset('assets/images/sti-logo.webp') }}" alt="">
-                
-                <form id="webNavBar" action="" class="flex flex-col gap-2">
-                    @csrf
-                </form>
+            <section class="h-full px-2 bg-primary hidden md:flex flex-col justify-between items-center w-0 md:w-fit gap-2">
+                <div class="flex flex-col items-center">
+                    <img class="w-24 py-4" src="{{ asset('assets/images/sti-logo.webp') }}" alt="">    
+                    <form id="webNavBar" action="" class="flex flex-col gap-2">
+                        @csrf
+                    </form>
+                </div>
+                <a href="{{ route('logout') }}" class="mb-6 flex items-center active:bg-bgcolor-gray rounded-full justify-center w-full py-3 gap-4 active:bg-primary_pressed">
+                    <img src="{{ asset('assets/icons/log-out-white.svg') }}" alt="">
+                    <p class="text-txtclr_white">Log out</p>
+                </a>
             </section>
         @else
-            <section section class="hidden h-full bg-primary md:block md:w-1/12 p-2">
-                <img class="hidden md:block" src="{{ asset('assets/images/sti-logo.webp') }}" alt="">
+            <section section class="hidden h-full bg-primary md:flex flex-col justify-between items-center md:w-1/12 p-2">
+                <img class="hidden md:block h-fit" src="{{ asset('assets/images/sti-logo.webp') }}" alt="">
+                <a href="{{ route('logout') }}" title="Log out" class="mb-6 flex items-center active:bg-bgcolor-gray rounded-full justify-center aspect-square py-3 gap-4 active:bg-primary_pressed">
+                    <img src="{{ asset('assets/icons/log-out-white.svg') }}" alt="">
+                </a>
             </section>
         @endif
 
@@ -35,6 +43,12 @@
                                 @csrf
                             </form>
                             <img src="{{ asset('assets/icons/chevron-down.svg') }}" class="md:hidden">
+                        </div>
+                    @else
+                        <div>
+                            <a href="{{ route('logout') }}" class="flex items-center active:bg-bgcolor-gray rounded-full justify-center w-full">
+                                <img class="icons-def" src="{{ asset('assets/icons/log-out-black.svg') }}" alt="">
+                            </a>
                         </div>
                     @endif
                 </div>

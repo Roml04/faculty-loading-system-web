@@ -8,6 +8,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\CheckIfLoggedIn;
 use App\Http\Middleware\EnsureUserIsTeacher;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('pages.sign-in', ['pagetitle' => 'Sign In']); })->name('login');
@@ -35,6 +36,14 @@ Route::get('/auth/callback', [AzureAuthController::class, 'authCallback'])->name
 * 
 */
 
+Route::get('/logout', function() {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    return redirect('/');
+})->name('logout');
+
 Route::get('/signin', function () {
 
     if (request()->get('source') !== 'desktop') {
@@ -48,7 +57,7 @@ Route::get('/signin', function () {
 
 Route::get('/register', function () {
 
-        if (request()->get('source') !== 'desktop') {
+    if (request()->get('source') !== 'desktop') {
         abort(403);
     }
 
