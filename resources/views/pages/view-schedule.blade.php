@@ -67,7 +67,7 @@
             </div>
         </div>
         <div id="calendar" class="h-full lg:pr-0"></div>
-        
+
         @push('scripts')
 
             <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>

@@ -78,25 +78,47 @@ class SectionController extends Controller
         ];
         
         foreach ($formattedSchedules as $key => $array) {
-            
             foreach ($schedules as $schedule) {
                 if ($schedule['daysOfWeek'][0] === $key) {
-                    array_push($formattedSchedules[$key], [
-                        "title" => $schedule['title'],
-                        "startTime" => Carbon::createFromFormat('H:i:s', $schedule['startTime'])->format('g:i A'),
-                        "endTime" => Carbon::createFromFormat('H:i:s', $schedule['endTime'])->format('g:i A'),
-                        "daysOfWeek" => $schedule['daysOfWeek'][0],
-                        "extendedProps" => [
-                            "sections" => $schedule['extendedProps']['sections'],
-                            "teacherName" => $schedule['extendedProps']['teacherName'],
-                            "roomNumber" => $schedule['extendedProps']['roomNumber'],
-                            "roomType" => $schedule['extendedProps']['roomType'],
-                        ]
-                    ]);
+                    try {
+                        // Add seconds if missing from time format
+                        $startTime = $schedule['startTime'];
+                        $endTime = $schedule['endTime'];
+                        
+                        if (substr_count($startTime, ':') === 1) {
+                            $startTime .= ':00';
+                            $endTime .= ':00';
+                        }
+                        
+                        array_push($formattedSchedules[$key], [
+                            "title" => $schedule['title'],
+                            "startTime" => Carbon::createFromFormat('H:i:s', $startTime)->format('g:i A'),
+                            "endTime" => Carbon::createFromFormat('H:i:s', $endTime)->format('g:i A'),
+                            "daysOfWeek" => $schedule['daysOfWeek'][0],
+                            "extendedProps" => [
+                                "sections" => $schedule['extendedProps']['sections'],
+                                "teacherName" => $schedule['extendedProps']['teacherName'],
+                                "roomNumber" => $schedule['extendedProps']['roomNumber'],
+                                "roomType" => $schedule['extendedProps']['roomType'],
+                            ]
+                        ]);
+                    } catch (\Exception $e) {
+                        // Fallback to original values if parsing fails
+                        array_push($formattedSchedules[$key], [
+                            "title" => $schedule['title'],
+                            "startTime" => $schedule['startTime'],
+                            "endTime" => $schedule['endTime'],
+                            "daysOfWeek" => $schedule['daysOfWeek'][0],
+                            "extendedProps" => [
+                                "sections" => $schedule['extendedProps']['sections'],
+                                "teacherName" => $schedule['extendedProps']['teacherName'],
+                                "roomNumber" => $schedule['extendedProps']['roomNumber'],
+                                "roomType" => $schedule['extendedProps']['roomType'],
+                            ]
+                        ]);
+                    }
                 }
-
             }
-
         }
 
         $days = [

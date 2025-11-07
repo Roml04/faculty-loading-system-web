@@ -30,7 +30,7 @@
 }
 
 .icons {
-    @apply w-4 aspect-square
+    @apply w-4 h-4 aspect-square
 }
 
 .icons-lg {

@@ -57,36 +57,79 @@ class ClassTimeSlotController extends Controller
 
     public function teacherTimeSlots($id) {
         $teacher = Teacher::with([
-                'tertiarysectionclass.sections',
-                'tertiarysectionclass.courses',
-                'tertiarysectionclass.rooms',
-                'tertiarysectionclass.teachers'
-            ])->findOrFail($id);
+            'tertiarysectionclass.sections',
+            'tertiarysectionclass.courses',
+            'tertiarysectionclass.rooms',
+            'tertiarysectionclass.teachers'
+        ])->findOrFail($id);
 
         $timeslots = $teacher->tertiarysectionclass ?? collect();
 
-        $events = $timeslots->flatMap(function($slot) {
-            $course = $slot->courses ?? null;
-            $room   = $slot->rooms ?? null;
+        // Group timeslots by time and teacher
+        $groupedTimeslots = $timeslots->groupBy(function($slot) {
+            return $slot->start . '_' . 
+                $slot->end . '_' . 
+                $slot->teachers_id;
+        });
 
-            $sections = $slot->sections instanceof \Illuminate\Support\Collection
-                ? $slot->sections
-                : collect([$slot->sections]);
+        $events = $groupedTimeslots->map(function($group) {
+            $firstSlot = $group->first();
+            $course = $firstSlot->courses ?? null;
+            $room = $firstSlot->rooms ?? null;
+            $teacher = $firstSlot->teachers ?? null;
 
-            return $sections->map(function($section) use ($slot, $course, $room) {
-                return [
-                    "title" => $course->course_name ?? '',
-                    "startTime" => $slot->start,
-                    "endTime" => $slot->end,
-                    "daysOfWeek" => [$slot->day_of_week],
-                    "extendedProps" => [
-                        "sections" => $section->section_name ?? '',
-                        "roomNumber" => $room->room_name ?? '',
-                        "roomType" => ucfirst($room->room_type ?? ''),
-                    ]
-                ];
-            });
+            // Combine all sections from the grouped timeslots
+            $sectionNames = $group->flatMap(function($slot) {
+                return $slot->sections->pluck('section_name');
+            })->unique()->implode(', ');
+
+            return [
+                "title" => $course->course_name ?? '',
+                "startTime" => $firstSlot->start,
+                "endTime" => $firstSlot->end,
+                "daysOfWeek" => [$firstSlot->day_of_week],
+                "extendedProps" => [
+                    "sections" => $sectionNames,
+                    "teacherName" => $teacher->teacher_name ?? '',
+                    "roomNumber" => $room->room_name ?? '',
+                    "roomType" => ucfirst($room->room_type ?? ''),
+                ]
+            ];
         })->sortBy(fn($item) => strtotime($item['startTime']))->values()->all();
+
+        return response()->json($events);
+        
+        // $teacher = Teacher::with([
+        //         'tertiarysectionclass.sections',
+        //         'tertiarysectionclass.courses',
+        //         'tertiarysectionclass.rooms',
+        //         'tertiarysectionclass.teachers'
+        //     ])->findOrFail($id);
+
+        // $timeslots = $teacher->tertiarysectionclass ?? collect();
+
+        // $events = $timeslots->flatMap(function($slot) {
+        //     $course = $slot->courses ?? null;
+        //     $room   = $slot->rooms ?? null;
+
+        //     $sections = $slot->sections instanceof \Illuminate\Support\Collection
+        //         ? $slot->sections
+        //         : collect([$slot->sections]);
+
+        //     return $sections->map(function($section) use ($slot, $course, $room) {
+        //         return [
+        //             "title" => $course->course_name ?? '',
+        //             "startTime" => $slot->start,
+        //             "endTime" => $slot->end,
+        //             "daysOfWeek" => [$slot->day_of_week],
+        //             "extendedProps" => [
+        //                 "sections" => $section->section_name ?? '',
+        //                 "roomNumber" => $room->room_name ?? '',
+        //                 "roomType" => ucfirst($room->room_type ?? ''),
+        //             ]
+        //         ];
+        //     });
+        // })->sortBy(fn($item) => strtotime($item['startTime']))->values()->all();
 
         return response()->json($events);
     }
